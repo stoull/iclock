@@ -2,7 +2,7 @@
 import { t, tWithFallback, tOptional, tSmart } from '../assets/i18n/translationHelpers.js';
 
 // 示例组件
-function ExampleComponent() {
+function TranslationExample() {
   return (
     <div>
       {/* 1. 基本翻译 - 会显示缺失警告 */}
@@ -34,4 +34,4 @@ if (process.env.NODE_ENV === 'development') {
   }, 2000);
 }
 
-export default ExampleComponent;
+export default TranslationExample;
