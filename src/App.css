@@ -1,5 +1,76 @@
+/* 导入全局样式 */
+@import './styles/variables.css';
+@import './styles/globals.css';
+
+/* App 根组件样式 */
 .App {
+  background-color: var(--main-bg-color);
   text-align: center;
+  min-width: 100vw;
+  min-height: 100vh;
+  position: relative;
+}
+
+.App-header {
+  background-color: var(--main-bg-color);
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: var(--main-text-color);
+}
+
+.App-Content {
+  background-color: var(--main-bg-color);
+  min-height: 90vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--main-text-color);
+}
+
+/* 导航栏样式 */
+.navbar {
+  position: fixed;
+  top: 10px;
+  left: 0;
+  height: 40px;
+  width: 100vw;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 var(--spacing-lg) 0 0;
+  z-index: var(--z-index-dropdown);
+  align-items: center;
+  background: transparent;
+}
+
+.navbar svg {
+  width: 20px;
+  height: 20px;
+  margin: 0 var(--spacing-sm);
+  cursor: pointer;
+  color: var(--main-text-color);
+  fill: var(--main-text-color);
+  transition: var(--transition-base);
+}
+
+.navbar svg:hover {
+  color: var(--accent-color);
+  fill: var(--accent-color);
+  transform: scale(1.1);
+}
+
+/* 动画定义 */
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .App-logo {
@@ -10,29 +81,5 @@
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
   }
 }

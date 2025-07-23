@@ -1,0 +1,26 @@
+{
+  "welcome": "欢迎来到主页",
+  "user": {
+    "greeting": "你好，{{name}}！",
+    "profile": "{{name}}的个人资料",
+    "stats": "您有{{count}}条消息",
+    "lastLogin": "上次登录：{{date}}"
+  },
+  "navigation": {
+    "home": "首页",
+    "analysis": "分析", 
+    "backstage": "后台"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "确认"
+  },
+  "app": {
+    "title": "欢迎使用{{appName}}",
+    "version": "版本 {{version}}",
+    "footer": "{{appName}} v{{version}} - 保留所有权利"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "welcome": "欢迎来到主页",
+  "navigation": {
+    "home": "首页",
+    "analysis": "数据分析", 
+    "backstage": "管理后台"
+  },
+  "common": {
+    "loading": "正在加载...",
+    "error": "出现错误",
+    "success": "操作成功",
+    "cancel": "取消",
+    "confirm": "确定"
+  },
+  "region": {
+    "specific": "中国大陆专用术语"
+  }
+}

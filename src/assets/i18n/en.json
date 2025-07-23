@@ -1,0 +1,26 @@
+{
+  "welcome": "Welcome to the Home Page",
+  "user": {
+    "greeting": "Hello, {{name}}!",
+    "profile": "{{name}}'s Profile",
+    "stats": "You have {{count}} messages",
+    "lastLogin": "Last login: {{date}}"
+  },
+  "navigation": {
+    "home": "Home",
+    "analysis": "Analysis", 
+    "backstage": "BackStage"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
+  "app": {
+    "title": "Welcome to {{appName}}",
+    "version": "Version {{version}}",
+    "footer": "{{appName}} v{{version}} - All rights reserved"
+  }
+}

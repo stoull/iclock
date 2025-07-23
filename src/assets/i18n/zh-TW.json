@@ -1,0 +1,18 @@
+{
+  "welcome": "歡迎來到主頁",
+  "navigation": {
+    "home": "首頁",
+    "analysis": "資料分析", 
+    "backstage": "管理後台"
+  },
+  "common": {
+    "loading": "載入中...",
+    "error": "發生錯誤",
+    "success": "操作成功",
+    "cancel": "取消",
+    "confirm": "確定"
+  },
+  "region": {
+    "specific": "台灣專用術語"
+  }
+}

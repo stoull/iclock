@@ -1,0 +1,15 @@
+{
+  "welcome": "歡迎來到主頁",
+  "navigation": {
+    "home": "首頁",
+    "analysis": "分析", 
+    "backstage": "後台"
+  },
+  "common": {
+    "loading": "載入中...",
+    "error": "錯誤",
+    "success": "成功",
+    "cancel": "取消",
+    "confirm": "確認"
+  }
+}
