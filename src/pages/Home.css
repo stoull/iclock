@@ -1,0 +1,31 @@
+
+.home > div {
+    background-color: var(--main-bg-color);
+    padding: 1em;
+}
+
+.home {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 0px;
+    margin-top: 44px;
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    inset: 0 0 auto 0;
+    z-index: 1000;
+    padding: 8px;
+    justify-content: flex-end;
+    gap: 10px;
+    height: 44px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}

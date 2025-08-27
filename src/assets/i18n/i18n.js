@@ -85,7 +85,7 @@ i18n.interpolation = {
   defaultVariables: {
     appName: 'iClock',
     version: '1.0.0',
-    company: 'Your Company',
+    company: 'Hut Inc.',
     year: new Date().getFullYear()
   },
   

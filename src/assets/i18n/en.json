@@ -22,5 +22,14 @@
     "title": "Welcome to {{appName}}",
     "version": "Version {{version}}",
     "footer": "{{appName}} v{{version}} - All rights reserved"
+  },
+  "date": {
+    "日": "日",
+    "一": "一",
+    "二": "二",
+    "三": "三",
+    "四": "四",
+    "五": "五",
+    "六": "六"
   }
 }

@@ -1,0 +1,49 @@
+
+.parent-container {
+  text-align: center;
+}
+
+.wrapper2 > div {
+  border-radius: 5px;
+  background-color: rgb(207, 232, 220);
+  padding: 1em;
+}
+
+.wrapper2 {
+  display: flex;
+  padding: 8px;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.nav > div {
+  border-radius: 5px;
+  background-color: rgb(122, 187, 197);
+}
+.nav {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 8px;
+  justify-content: flex-end;
+}
+
+.div1 {
+  flex: 1;
+}
+
+.div2 {
+  flex: 3;
+}
+
+.div3 {
+  flex: 8;
+}
+
+
