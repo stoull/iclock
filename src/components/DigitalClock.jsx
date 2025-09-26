@@ -63,7 +63,10 @@ function DigitalClock({ fontSize }) {
     return (
         <div className="digital-clock"> 
             <div style={{ fontSize: timeFontSize}}> {timeInfo.hours} </div>
-            <div className="digital-clock-dot" style={{ fontSize: dotFontSize}}>:</div>
+            <div className="digital-clock-dot-container" style={{ fontSize: dotFontSize}}>
+                <div className="digital-clock-dot-up">·</div>
+                <div className="digital-clock-dot-down">·</div>
+            </div>
             <div style={{ fontSize: timeFontSize}}> {timeInfo.minutes} </div>
             {/* <div style={{ fontSize: meridiemFontSize}}> {timeInfo.meridian} </div> */}
             <div className="digital-clock-day" style={{ fontSize: dayFontSize}}> {timeInfo.dayOfWeekName} </div>

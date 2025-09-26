@@ -22,9 +22,25 @@
     padding-left: 0.5em;
 }
 
-.digital-clock-dot {
-    padding-bottom: 20px;
+.digital-clock-dot-container {
+    flex: none;
+    flex-direction: column;
+    justify-content: center;
     animation: breath-animation 2s infinite ease-in-out;
+}
+
+.digital-clock-dot-up {
+  flex: 0.5;
+  gap: 0;
+  min-height: 0;
+  line-height: 0.45;
+}
+
+.digital-clock-dot-down {
+  flex: 0.5;
+  gap: 0;
+  min-height: 0;
+  line-height: 0.65;
 }
 
 @keyframes breath-animation {
