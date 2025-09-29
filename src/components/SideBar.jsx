@@ -4,8 +4,10 @@ import { useState, useEffect } from 'react';
 
 import { sideBarDataModel, BarMenuType } from './BarMenuModel.js';
 
+import useI18n from '../hooks/useI18n';
 function SideBar( {isVisible, onToggleMenuAction} ) {
     const [visible, setVisible] = useState(true);
+    const { locale, setLanguage, t } = useI18n();
 
     useEffect( () => {
         setVisible(isVisible);
@@ -35,7 +37,7 @@ function SideBar( {isVisible, onToggleMenuAction} ) {
                     sideBarDataModel.map( (item, index) => {
                         return (
                             <li key={index} data-index={index} className="sidebar-item" onClick={ () => handleMenuClick(item)}>
-                                <a link={item.path}>{item.icon} {item.title}</a>
+                                <a link={item.path}>{item.icon} {t(item.title)}</a>
                             </li>
                         )
                     })

@@ -1,17 +1,17 @@
-import { AiOutlineFullscreenExit, AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus, AiOutlineDoubleRight, AiOutlineBgColors, AiOutlineMoon, AiOutlineSun } from "react-icons/ai";
+import { AiOutlineFullscreenExit, AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus, AiOutlineDoubleRight, AiOutlineBgColors, AiOutlineMoon, AiOutlineSun, AiOutlineTranslation } from "react-icons/ai";
 
 const BarMenuType = Object.freeze({
     SIDEBARVISIBLE: 0,
     LIGHT_MODEL: 1,
     DARK_MODEL: 2,
     WALLPAPER: 3,
+    LANGUAGE: 4,
 
-    FONTSIZEPLUS: 4,
-    FONTSIZEMINUS: 5,
-    FULLSCREEN: 6,
-    MORE: 7
+    FONTSIZEPLUS: 11,
+    FONTSIZEMINUS: 12,
+    FULLSCREEN: 13,
+    MORE: 14
 });
-
 const sideBarDataModel = [
     {
         title: '',
@@ -20,23 +20,29 @@ const sideBarDataModel = [
         type: BarMenuType.SIDEBARVISIBLE
     },
     {
-        title: 'Light',
+        title: 'theme.light',
         path: '/ThemeModel',
         icon: <AiOutlineSun />,
         type: BarMenuType.LIGHT_MODEL
     },
     {
-        title: 'Dark',
+        title: 'theme.dark',
         path: '/ThemeModel',
         icon: <AiOutlineMoon />,
         type: BarMenuType.DARK_MODEL
-    },
+    }, 
     {
-        title: 'Wallpaper',
+        title: 'theme.wallpaper',
         path: '/ThemeModel',
         icon: <AiOutlineBgColors />,
         type: BarMenuType.WALLPAPER
-    }
+    },
+    {
+        title: 'theme.language',
+        path: '/LanguageModel',
+        icon: <AiOutlineTranslation />,
+        type: BarMenuType.LANGUAGE
+    },
 ]
 
 const topMenuBarDataModel = [

@@ -60,6 +60,8 @@ const missingCollector = new MissingTranslationCollector();
 export function t(key, options = {}) {
   try {
     const result = i18n.t(key, options);
+
+    if (key == null || key === '') return '';
     
     // 检查是否是缺失的翻译
     if (result.includes('[missing') || result === key) {

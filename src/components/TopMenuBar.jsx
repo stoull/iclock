@@ -2,7 +2,7 @@ import "./TopMenuBar.css";
 
 import { BarMenuType, topMenuBarDataModel } from './BarMenuModel.js';
 
-function TopMenuBar ( {isFullScreen, onToggleFullScreen, onIncrementFontSize, onDecrementFontSize, isShowSideBar, onToggleSideBarVisible, onToggleMenuAction} ) {
+function TopMenuBar ( {isFullScreen, isShowSideBar, onToggleMenuAction} ) {
 
     function handleMenuClick(item) {
         onToggleMenuAction(item.type);

@@ -4,8 +4,6 @@ import { I18n } from "i18n-js";
 import en from "./en.json";
 import zhHans from "./zh-Hans.json";  // 简体中文
 import zhHant from "./zh-Hant.json";  // 繁体中文
-import zhCN from "./zh-CN.json";      // 简体中文（中国大陆）
-import zhTW from "./zh-TW.json";      // 繁体中文（台湾）
 
 const i18n = new I18n({
   // 英文
@@ -16,13 +14,6 @@ const i18n = new I18n({
   
   // 繁体中文（通用）
   "zh-Hant": zhHant,
-  
-  // 特定地区的中文
-  "zh-CN": zhCN,  // 简体中文（中国大陆）
-  "zh-TW": zhTW,  // 繁体中文（台湾）
-  
-  // 简化别名（可选）
-  zh: zhHans,     // 默认中文指向简体中文
 });
 
 // 设置默认语言
@@ -34,11 +25,10 @@ i18n.enableFallback = true;
 
 // 设置回退顺序
 i18n.fallbacks = {
-  "zh-CN": ["zh-Hans", "zh", "en"],
-  "zh-TW": ["zh-Hant", "zh-Hans", "en"], 
   "zh-HK": ["zh-Hant", "zh-TW", "en"],
-  "zh-SG": ["zh-Hans", "zh-CN", "en"],
-  "zh": ["zh-Hans", "en"]
+  "zh": ["zh-Hans", "en"],
+  "en": ["en"],
+  "en-US": ["en", "en-GB"]
 };
 
 // 配置缺失翻译的处理方式

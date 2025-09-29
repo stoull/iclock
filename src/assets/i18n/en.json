@@ -1,4 +1,11 @@
 {
+  "theme": {
+    "": "",
+    "light": "Light",
+    "dark": "Dark",
+    "wallpaper": "Wallpaper",
+    "language": "Language"
+  },
   "welcome": "Welcome to the Home Page",
   "user": {
     "greeting": "Hello, {{name}}!",

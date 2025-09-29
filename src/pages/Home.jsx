@@ -5,11 +5,13 @@ import './Home.css';
 import DigitalClock from '../components/DigitalClock';
 import TopMenuBar from '../components/TopMenuBar';
 import {SideBar, BarMenuType} from '../components/SideBar';
+import useI18n from '../hooks/useI18n'; 
 
 const Home = () => {
   const [fontSize, setFontSize] = useState('16rem');
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isShowSideBar, setIsShowSideBar] = useState(false);
+  const { locale, setLanguage } = useI18n();
 
   // 顶部菜单栏相关功能的方法
   function handleDecrementFontSize() {
@@ -42,8 +44,14 @@ const Home = () => {
     setIsShowSideBar( pre => !pre );
   }
 
+  function handleLanguageChange() {
+    const current = locale;
+    const isZh = String(current).toLowerCase().includes('zh');
+    if (isZh) setLanguage('en'); else setLanguage('zh-Hant');
+    console.log('language switched to:', isZh);
+  }
+
   function handleBarMenuActions(menuItem) {
-    console.log('menu item selected:', menuItem, typeof(menuItem), typeof(BarMenuType.HIDDENSIDEBAR), BarMenuType.HIDDENSIDEBAR);
     switch (menuItem) {
       case BarMenuType.FONTSIZEPLUS:
         handleIncrementFontSize();
@@ -64,12 +72,19 @@ const Home = () => {
         break;
       case BarMenuType.LIGHT_MODEL:
         // 切换到浅色主题
+        document.documentElement.style.setProperty('--main-bg-color', '#fafafa');
+        document.documentElement.style.setProperty('--main-text-color', '#1a1a1a');
         break;
       case BarMenuType.DARK_MODEL:
         // 切换到深色主题
+        document.documentElement.style.setProperty('--main-bg-color', '#282c34');
+        document.documentElement.style.setProperty('--main-text-color', '#ffffff');
         break;
       case BarMenuType.WALLPAPER:
         // 打开壁纸设置界面
+        break;
+      case BarMenuType.LANGUAGE:
+        handleLanguageChange();
         break;
       default:
         console.warn('Unhandled menu item type:', menuItem);
