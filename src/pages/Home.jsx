@@ -48,7 +48,6 @@ const Home = () => {
     const current = locale;
     const isZh = String(current).toLowerCase().includes('zh');
     if (isZh) setLanguage('en'); else setLanguage('zh-Hant');
-    console.log('language switched to:', isZh);
   }
 
   function handleBarMenuActions(menuItem) {
