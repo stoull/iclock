@@ -47,6 +47,7 @@ export function initTheme() {
 }
 
 export function setTheme(theme) {
+    console.log('setTheme called: ', theme);
   if (theme === 'light' || theme === 'dark') {
     setStoredTheme(theme);
     applyTheme(theme);

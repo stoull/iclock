@@ -15,11 +15,49 @@
     height: 32px;
 }
 
-.direction-rtl {
+.more-menu-item {
     transform: rotate(0deg);
-    transition: 0.2s;
+    margin-right: 0;
 }
-.direction-rtl.active {
+
+.more-menu-item.active {
     transform: rotate(180deg);
-    transition: 0.2s;
+    margin-right: 32px;
+}
+
+.more-menu-item.animation {
+    animation-duration: 0.6s;
+    animation-name: hiddenMoreMenu;
+    animation-fill-mode: none;
+    animation-timing-function: ease;
+    animation-delay: 0s;
+}
+
+.more-menu-item.active.animation {
+    animation-name: showMoreMenu;
+    animation-duration: 0.4s;
+}
+
+@keyframes showMoreMenu {
+   from {
+       margin-right: 0;
+       transform: rotate(0deg);
+   }
+   to {
+       margin-right: 32px;
+       transform: rotate(180deg);
+       /* transform: rotate(1800deg); */
+   } 
+}
+
+@keyframes hiddenMoreMenu {
+   from {
+       margin-right: 32px;
+       transform: rotate(180deg);
+       /* transform: rotate(1800deg); */
+   }
+    to {
+       margin-right: 0px;
+       transform: rotate(0deg);
+    } 
 }

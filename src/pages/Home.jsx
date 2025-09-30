@@ -15,6 +15,8 @@ const Home = () => {
   const [isShowSideBar, setIsShowSideBar] = useState(false);
   const { locale, setLanguage } = useI18n();
 
+  const [isManualClickedMoreMenuItem, setIsManualClickedMoreMenuItem] = useState(false); // 用于移除刚打开网页，或者刷新网页时的动画效果
+
   // 顶部菜单栏相关功能的方法
   function handleDecrementFontSize() {
     setFontSize( preSize => {
@@ -90,14 +92,22 @@ const Home = () => {
     }
   }
 
+  // 用于移除刚打开网页，或者刷新网页时的动画效果
+  function handleIsManualClickedMoreMenuItem(value) {
+    if (value !== isManualClickedMoreMenuItem) {
+      setIsManualClickedMoreMenuItem(value);
+    }
+  }
+
   return (
     <div className="home">
       <TopMenuBar 
       isFullScreen={isFullScreen}
       isShowSideBar={isShowSideBar}
+      onToggleIsManualClickedMoreMenuItem = {handleIsManualClickedMoreMenuItem}
       onToggleMenuAction={handleBarMenuActions}
       />
-      <SideBar isVisible={isShowSideBar} onToggleMenuAction={handleBarMenuActions} />
+      <SideBar isVisible={isShowSideBar} isManualClickedMoreMenuItem={isManualClickedMoreMenuItem} onToggleMenuAction={handleBarMenuActions} />
       
 
       <div className="content">

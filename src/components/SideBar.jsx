@@ -5,13 +5,20 @@ import { useState, useEffect } from 'react';
 import { sideBarDataModel, BarMenuType } from './BarMenuModel.js';
 
 import useI18n from '../hooks/useI18n';
-function SideBar( {isVisible, onToggleMenuAction} ) {
-    const [visible, setVisible] = useState(true);
-    const { locale, setLanguage, t } = useI18n();
+function SideBar( {isVisible, isManualClickedMoreMenuItem, onToggleMenuAction} ) {
+    const [visible, setVisible] = useState(false);
+    const { t } = useI18n();
+    const [isClicked, setIsClicked] = useState(false); // 用于移除刚打开网页，或者刷新网页时的动画效果
 
     useEffect( () => {
         setVisible(isVisible);
     }, [isVisible]);
+
+    useEffect( () => {
+        if (isManualClickedMoreMenuItem) {
+            if (isClicked === false) setIsClicked(true);
+        }
+    }, [isManualClickedMoreMenuItem]);
     
     function handleMenuEventClick(event) {
         const raw = event.currentTarget.dataset.index;
@@ -29,9 +36,8 @@ function SideBar( {isVisible, onToggleMenuAction} ) {
     function handleMenuClick(item) {
         onToggleMenuAction(item.type);
     }
-
     return (
-        <div className={visible ? 'sidebar active' : 'sidebar'}>
+        <div className={visible ? (isClicked ? 'sidebar active animation':'sidebar active') : (isClicked ? 'sidebar animation' : 'sidebar')}>
             <ul className='sidebar-items'>
                 {
                     sideBarDataModel.map( (item, index) => {

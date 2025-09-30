@@ -10,7 +10,6 @@ import Examples from './pages/Examples';
 import TestView from './pages/TestView';
 
 function App() {
-  console.log('App component rendered');
   return (
     <div>
       <Routes>

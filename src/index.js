@@ -4,12 +4,15 @@ import './index.css';
 import App from './App';
 
 import { autoDetectLanguage } from './utils/i18nHelper.js';
+import { initTheme } from './utils/theme.js';
+
 import reportWebVitals from './reportWebVitals';
 
 import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 autoDetectLanguage();
+initTheme();
 root.render(
   <React.StrictMode>
     <BrowserRouter>

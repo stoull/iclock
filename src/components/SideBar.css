@@ -10,16 +10,22 @@
     justify-content: center;
     position: fixed;
     top: 0;
-    right: -200px;
-    transition: 400ms;
+    right: -220px;
     backdrop-filter: blur(60px);
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-lg);
     z-index: 999;
 }
 
+.sidebar.animation {
+    transition: 400ms;
+}
+
 .sidebar.active {
     right: 6px;
+}
+
+.sidebar.active.animation {
     transition: 600ms;
 }
 
