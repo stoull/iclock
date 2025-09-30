@@ -25,7 +25,7 @@ function TopMenuBar ( {isFullScreen, isShowSideBar, onToggleIsManualClickedMoreM
     }
 
     function handleMenuclick(item) {
-        if (isClicked === false) {
+        if (isClicked === false && item.type === BarMenuType.MORE) {
             onToggleIsManualClickedMoreMenuItem(true);
             setIsClicked(true);
         }
