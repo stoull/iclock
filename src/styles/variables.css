@@ -5,6 +5,7 @@
   --main-text-color: #ffffff;
   --secondary-text-color: #a0a0a0;
   --accent-color: #ffffff;
+  --highlight-color: #61dafb;
   
   /* 字体 */
   --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -52,4 +53,56 @@
   --z-index-dropdown: 100;
   --z-index-modal: 1000;
   --z-index-tooltip: 1100;
+}
+
+/*
+ 优化版本
+  语义化主题变量（浅色/深色）
+  - 首选使用语义 token（surface / on-surface / surface-variant / elevation-*）
+  - 支持 prefers-color-scheme 和通过 html[data-theme] 覆盖
+*/
+:root {
+  --surface: #ffffff;
+  --surface-variant: #f7f8fa;
+  --on-surface: #111827;
+  --muted: #6b7280;
+  --elevation-1: rgba(2,6,23,0.06);
+  --elevation-2: rgba(2,6,23,0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface: #0b0f14;
+    --surface-variant: #0f1720;
+    --on-surface: #f3f4f6;
+    --muted: #9ca3af;
+    --elevation-1: rgba(255,255,255,0.03);
+    --elevation-2: rgba(255,255,255,0.04);
+  }
+}
+
+/* 用户通过 data-theme 强制切换（优先于 prefers-color-scheme） */
+html[data-theme="light"] {
+  --surface: #ffffff;
+  --surface-variant: #f7f8fa;
+  --on-surface: #111827;
+  --muted: #6b7280;
+  --elevation-1: rgba(2,6,23,0.06);
+  --elevation-2: rgba(2,6,23,0.08);
+}
+
+html[data-theme="dark"] {
+  --surface: #282c34;
+  --surface-variant: #0f1720;
+  --on-surface: #f3f4f6;
+  --muted: #9ca3af;
+  --elevation-1: rgba(255,255,255,0.03);
+  --elevation-2: rgba(255,255,255,0.04);
+}
+
+/* 兼容旧变量名：保持 --main-bg-color 等作为回退（使用 surface 作为主背景） */
+:root {
+  --main-bg-color: var(--surface);
+  --main-text-color: var(--on-surface);
+  --secondary-text-color: var(--muted);
 }

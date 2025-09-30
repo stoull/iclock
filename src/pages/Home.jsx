@@ -7,6 +7,8 @@ import TopMenuBar from '../components/TopMenuBar';
 import {SideBar, BarMenuType} from '../components/SideBar';
 import useI18n from '../hooks/useI18n'; 
 
+import { setTheme } from '../utils/theme.js';
+
 const Home = () => {
   const [fontSize, setFontSize] = useState('16rem');
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -71,13 +73,11 @@ const Home = () => {
         break;
       case BarMenuType.LIGHT_MODEL:
         // 切换到浅色主题
-        document.documentElement.style.setProperty('--main-bg-color', '#fafafa');
-        document.documentElement.style.setProperty('--main-text-color', '#1a1a1a');
+        setTheme('light');
         break;
       case BarMenuType.DARK_MODEL:
         // 切换到深色主题
-        document.documentElement.style.setProperty('--main-bg-color', '#282c34');
-        document.documentElement.style.setProperty('--main-text-color', '#ffffff');
+        setTheme('dark');
         break;
       case BarMenuType.WALLPAPER:
         // 打开壁纸设置界面
