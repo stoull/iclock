@@ -9,6 +9,9 @@ import useI18n from '../hooks/useI18n';
 
 import { setTheme } from '../utils/theme.js';
 
+import { apiClient } from '../services/apiClient.js';
+import { smartClockService } from '../services';
+
 const Home = () => {
   const [fontSize, setFontSize] = useState('16rem');
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -16,6 +19,14 @@ const Home = () => {
   const { locale, setLanguage } = useI18n();
 
   const [isManualClickedMoreMenuItem, setIsManualClickedMoreMenuItem] = useState(false); // 用于移除刚打开网页，或者刷新网页时的动画效果
+
+  useEffect(() => {
+    smartClockService.getCurrentTempInfo().then(data => {
+      console.log('Home page request tempinfo sucessful: ', data);
+    }).catch(err => {
+      console.error('Home page request tempinfo failed: ', err);
+    });
+  }, []);
 
   // 顶部菜单栏相关功能的方法
   function handleDecrementFontSize() {
