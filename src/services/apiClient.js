@@ -7,8 +7,8 @@ import HttpClient from './httpClient';
 const API_CONFIG = {
   baseURL: process.env.REACT_APP_API_BASE_URL || 'https://jsonplaceholder.typicode.com',
   timeout: 10000,
-  retryAttempts: 1,
-  retryDelay: 1000,
+  retries: 2,
+  retryDelay: 3000,
   headers: {
     'Content-Type': 'application/json',
   }
