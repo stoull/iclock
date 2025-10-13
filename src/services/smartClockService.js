@@ -9,6 +9,7 @@ export const API_PATHS = {
   tempInfo: '/temperature-humidity',
   tempHistory: '/temperature-humidity/history',
   surroundingsHistory: '/surroundings/history',
+  testApiPath: '/test-api'
 };
 
 class SmartClockService {
@@ -19,11 +20,17 @@ class SmartClockService {
   // 获取当前温湿度信息
   async getCurrentTempInfo() {
     const url = `${this.baseURL}${API_PATHS.tempInfo}`;
-    console.log('Fetching current temperature info from:', url);
     return apiClient.get(url);
   }
+  
+  // 获取测试API数据
+  async getTestAPI() {
+    const url = `${this.baseURL}${API_PATHS.testApiPath}`;
+    const response = await apiClient.get(url, {raw: true});
+    return ResponseHelper.json(response);
+  }
 
-    /**
+  /**
    * 获取用户列表
    * @param {Object} params - 查询参数
    * @param {number} params.page - 页码

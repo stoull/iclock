@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 
 import './Home.css';
 
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
+
 import DigitalClock from '../components/DigitalClock';
 import TopMenuBar from '../components/TopMenuBar';
 import {SideBar, BarMenuType} from '../components/SideBar';
@@ -13,6 +15,7 @@ import { apiClient } from '../services/apiClient.js';
 import { smartClockService } from '../services';
 
 const Home = () => {
+  const fullScreenHandle = useFullScreenHandle();
   const [fontSize, setFontSize] = useState('16rem');
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isShowSideBar, setIsShowSideBar] = useState(false);
@@ -46,11 +49,14 @@ const Home = () => {
     })
   }
  
-  // isFullScreen, onToggleFullScreen, onIncrementFontSize,
-  //  onDecrementFontSize, isShowSideBar, onToggleShowSideBar
 
-  function handleToggleFullScreen() {
-    setIsFullScreen( pre => !pre );
+    function handleToggleFullScreen() {
+    // 不再手动设置状态，让 onChange 回调来处理
+    if (isFullScreen) {
+      fullScreenHandle.exit();
+    } else {
+      fullScreenHandle.enter();
+    }
   }
 
   // 侧边栏的相关功能的方法
@@ -110,20 +116,32 @@ const Home = () => {
     }
   }
 
+  // 处理全屏状态变化的回调（包括ESC键退出）
+  function handleFullScreenChange(state) {
+    // console.log('全屏状态变化:', state ? '进入全屏' : '退出全屏');
+    setIsFullScreen(state);
+  }
+
   return (
     <div className="home">
-      <TopMenuBar 
-      isFullScreen={isFullScreen}
-      isShowSideBar={isShowSideBar}
-      onToggleIsManualClickedMoreMenuItem = {handleIsManualClickedMoreMenuItem}
-      onToggleMenuAction={handleBarMenuActions}
-      />
-      <SideBar isVisible={isShowSideBar} isManualClickedMoreMenuItem={isManualClickedMoreMenuItem} onToggleMenuAction={handleBarMenuActions} />
-      
+      <FullScreen 
+        className="fullscreen-container" 
+        handle={fullScreenHandle}
+        onChange={handleFullScreenChange}
+      >
+        <TopMenuBar 
+          isFullScreen={isFullScreen}
+          isShowSideBar={isShowSideBar}
+          onToggleIsManualClickedMoreMenuItem = {handleIsManualClickedMoreMenuItem}
+          onToggleMenuAction={handleBarMenuActions}
+          />
+          <SideBar isVisible={isShowSideBar} isManualClickedMoreMenuItem={isManualClickedMoreMenuItem} onToggleMenuAction={handleBarMenuActions} />
+          
 
-      <div className="content">
-        <DigitalClock fontSize={fontSize} />
-      </div>
+          <div className="content">
+            <DigitalClock fontSize={fontSize} />
+          </div>
+      </FullScreen>
     </div>
   );
 };
