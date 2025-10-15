@@ -7,11 +7,11 @@ import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import DigitalClock from '../components/DigitalClock';
 import TopMenuBar from '../components/TopMenuBar';
 import {SideBar, BarMenuType} from '../components/SideBar';
+import TempHumiBoard from '../components/TemperatureAndHumidity/TempHumiBoard';
 import useI18n from '../hooks/useI18n'; 
 
 import { setTheme } from '../utils/theme.js';
 
-import { apiClient } from '../services/apiClient.js';
 import { smartClockService } from '../services';
 
 const Home = () => {
@@ -24,11 +24,11 @@ const Home = () => {
   const [isManualClickedMoreMenuItem, setIsManualClickedMoreMenuItem] = useState(false); // 用于移除刚打开网页，或者刷新网页时的动画效果
 
   useEffect(() => {
-    smartClockService.getCurrentTempInfo().then(data => {
-      console.log('Home page request tempinfo sucessful: ', data);
-    }).catch(err => {
-      console.error('Home page request tempinfo failed: ', err);
-    });
+    // smartClockService.getCurrentTempInfo().then(data => {
+    //   console.log('Home page request tempinfo sucessful: ', data);
+    // }).catch(err => {
+    //   console.error('Home page request tempinfo failed: ', err);
+    // });
   }, []);
 
   // 顶部菜单栏相关功能的方法
@@ -41,7 +41,6 @@ const Home = () => {
   }
 
   function handleIncrementFontSize() {
-    console.log('increment font size');
     setFontSize( preSize => {
       let preFloat = parseFloat(preSize);
       preFloat = preFloat < 50.0 ? preFloat : 50.0;
@@ -140,6 +139,7 @@ const Home = () => {
 
           <div className="content">
             <DigitalClock fontSize={fontSize} />
+            <TempHumiBoard fontSize={fontSize} />
           </div>
       </FullScreen>
     </div>

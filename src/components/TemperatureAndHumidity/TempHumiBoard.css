@@ -1,0 +1,26 @@
+
+.temp-humi-board {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  gap: 60px;;
+}
+
+.temp-humi-board.indoor {
+  display: flex;
+  gap: 40px;
+}
+
+.temp-humi-board.outdoor {
+  display: flex;
+  gap: 20px;
+}
+
+.temp-humi-board.cpu {
+  display: flex;
+  font-weight: normal;
+  font-size: 6px;
+}

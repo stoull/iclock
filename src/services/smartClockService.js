@@ -1,4 +1,4 @@
-import apiClient from './apiClient.js';
+import APIClient from './apiClient.js';
 import { ResponseHelper } from './httpClient.js';
 
 
@@ -15,18 +15,19 @@ export const API_PATHS = {
 class SmartClockService {
   constructor(baseURL = BASE_URL) {
     this.baseURL = baseURL;
+    this.apiClient = APIClient({ baseURL: baseURL });
   }
 
   // 获取当前温湿度信息
   async getCurrentTempInfo() {
-    const url = `${this.baseURL}${API_PATHS.tempInfo}`;
-    return apiClient.get(url);
+    const url = API_PATHS.tempInfo;
+    return this.apiClient.get(url);
   }
   
   // 获取测试API数据
   async getTestAPI() {
     const url = `${this.baseURL}${API_PATHS.testApiPath}`;
-    const response = await apiClient.get(url, {raw: true});
+    const response = await this.apiClient.get(url, {raw: true});
     return ResponseHelper.json(response);
   }
 
@@ -38,8 +39,8 @@ class SmartClockService {
    * @param {string} params.search - 搜索关键词
    * @returns {Promise<Object>}
    */
-  async getTempInfoHistory(params = {}) {
-    const url = new URL(this.basePath, API_PATHS.tempHistory);
+  async getTempInfoHistory(params = { }) {
+    const url = new URL(this.baseURL + API_PATHS.tempHistory);
     
     // 添加查询参数
     Object.keys(params).forEach(key => {
@@ -47,9 +48,7 @@ class SmartClockService {
         url.searchParams.append(key, params[key]);
       }
     });
-    
-    const response = await apiClient.get(url.pathname + url.search);
-    return ResponseHelper.json(response);
+    return await this.apiClient.get(API_PATHS.tempHistory + url.search);
   }
 
 }

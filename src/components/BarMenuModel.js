@@ -1,4 +1,4 @@
-import { AiOutlineFullscreenExit, AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus, AiOutlineDoubleRight, AiOutlineBgColors, AiOutlineMoon, AiOutlineSun, AiOutlineTranslation } from "react-icons/ai";
+import { AiOutlineFullscreenExit, AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus, AiOutlineDoubleLeft, AiOutlineDoubleRight, AiOutlineBgColors, AiOutlineMoon, AiOutlineSun, AiOutlineTranslation } from "react-icons/ai";
 
 const BarMenuType = Object.freeze({
     SIDEBARVISIBLE: 0,
@@ -68,7 +68,7 @@ const topMenuBarDataModel = [
     {
         title: 'More',
         path: '/ThemeModel',
-        icon: <AiOutlineDoubleRight />,
+        icon: <AiOutlineDoubleLeft />,
         type: BarMenuType.MORE
     }
 ]
