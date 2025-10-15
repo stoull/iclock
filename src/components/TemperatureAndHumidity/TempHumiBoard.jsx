@@ -18,13 +18,6 @@ class TempHumiBoard extends React.Component {
             historyData: null,
             loading: false,
             error: null,
-
-            // colors
-            color_temp_indoor: null,
-            color_humi_indoor: null,
-            color_temp_outdoor: null,
-            color_humi_outdoor: null,
-            color_weather: null
         };
     }
 
@@ -78,11 +71,6 @@ class TempHumiBoard extends React.Component {
         const { fontSize } = this.props;
         const { 
             tempInfo, 
-            color_temp_indoor, 
-            color_humi_indoor,
-            color_temp_outdoor,
-            color_humi_outdoor,
-            color_weather,
             historyData
         } = this.state;
         
@@ -92,8 +80,6 @@ class TempHumiBoard extends React.Component {
                     {/*<TempIndoorDisplay 
                         tempInfo={tempInfo}
                         fontSize={fontSize}
-                        color_temp_indoor={color_temp_indoor}
-                        color_humi_indoor={color_humi_indoor}
                     />*/}
                     
                     <TempHumiTextDisplay 

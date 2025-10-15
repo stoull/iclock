@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { getHumiColorValue, getTempColorValue, getWheatherColorValue } from './TempHumiTextDisplayData';
 // 室内温湿度显示组件
 class TempIndoorDisplay extends React.PureComponent {
   constructor(props) {
@@ -27,30 +28,10 @@ class TempIndoorDisplay extends React.PureComponent {
     if (!tempInfo) return;
 
     // 根据温度计算颜色
-    const temperature = tempInfo.temperature;
-    let tempColor = '#333333'; // 默认色
-    if (temperature < 10) {
-      tempColor = '#0066cc'; // 蓝色 - 冷
-    } else if (temperature < 25) {
-      tempColor = '#00cc66'; // 绿色 - 适宜
-    } else if (temperature < 35) {
-      tempColor = '#ff9900'; // 橙色 - 温暖
-    } else {
-      tempColor = '#ff3300'; // 红色 - 热
-    }
+    const tempColor = getTempColorValue(tempInfo.temperature); 
 
     // 根据湿度计算颜色
-    const humidity = tempInfo.humidity;
-    let humiColor = '#333333';
-    if (humidity < 30) {
-      humiColor = '#cc6600'; // 棕色 - 干燥
-    } else if (humidity < 60) {
-      humiColor = '#00cc66'; // 绿色 - 适宜
-    } else if (humidity < 80) {
-      humiColor = '#0066cc'; // 蓝色 - 潮湿
-    } else {
-      humiColor = '#003399'; // 深蓝 - 很潮湿
-    }
+    const humiColor = getHumiColorValue(tempInfo.humidity); 
 
     this.setState({
       color_temp_indoor: tempColor,
