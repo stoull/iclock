@@ -1,3 +1,10 @@
+
+### Pending Issues
+
+* "主题闪烁"问题
+    在系统为light主题，APP为dark的时候，刷新的时候会闪一下白色的背景，然后才显示正确的dark主题
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

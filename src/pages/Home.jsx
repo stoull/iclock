@@ -10,18 +10,25 @@ import {SideBar, BarMenuType} from '../components/SideBar';
 import TempHumiBoard from '../components/TemperatureAndHumidity/TempHumiBoard';
 import useI18n from '../hooks/useI18n'; 
 
-import { setTheme } from '../utils/theme.js';
-
-import { smartClockService } from '../services';
+import { usePreferences } from '../contexts/APPContext';
 
 const Home = () => {
   const fullScreenHandle = useFullScreenHandle();
-  const [fontSize, setFontSize] = useState('16rem');
+  const { locale, setLanguage } = useI18n();
+  const { preferences, updatePreferences} = usePreferences(); 
+  // 使用preferences中的值初始化fontSize
+  const [fontSize, setFontSize] = useState(preferences.clock_font_size);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isShowSideBar, setIsShowSideBar] = useState(false);
-  const { locale, setLanguage } = useI18n();
 
   const [isManualClickedMoreMenuItem, setIsManualClickedMoreMenuItem] = useState(false); // 用于移除刚打开网页，或者刷新网页时的动画效果
+
+  // 监听preferences变化，同步fontSize
+  useEffect(() => {
+    if (preferences.clock_font_size) {
+      setFontSize(preferences.clock_font_size);
+    }
+  }, [preferences.clock_font_size]);
 
   useEffect(() => {
     // smartClockService.getCurrentTempInfo().then(data => {
@@ -36,7 +43,10 @@ const Home = () => {
     setFontSize( preSize => {
       let preFloat = parseFloat(preSize);
       preFloat = preFloat > 2.0 ? preFloat : 2.0;
-      return `${preFloat-1}rem`
+      const newSize = `${preFloat-1}rem`;
+      // 同时更新preferences
+      updatePreferences({ clock_font_size: newSize });
+      return newSize;
     })
   }
 
@@ -44,7 +54,10 @@ const Home = () => {
     setFontSize( preSize => {
       let preFloat = parseFloat(preSize);
       preFloat = preFloat < 50.0 ? preFloat : 50.0;
-      return `${preFloat+1}rem`
+      const newSize = `${preFloat+1}rem`;
+      // 同时更新preferences
+      updatePreferences({ clock_font_size: newSize });
+      return newSize;
     })
   }
  
@@ -91,11 +104,11 @@ const Home = () => {
         break;
       case BarMenuType.LIGHT_MODEL:
         // 切换到浅色主题
-        setTheme('light');
+        updatePreferences({ theme : 'light' });
         break;
       case BarMenuType.DARK_MODEL:
         // 切换到深色主题
-        setTheme('dark');
+        updatePreferences({ theme : 'dark' });
         break;
       case BarMenuType.WALLPAPER:
         // 打开壁纸设置界面

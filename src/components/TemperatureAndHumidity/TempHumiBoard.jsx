@@ -3,6 +3,7 @@ import React from 'react';
 import './TempHumiBoard.css';
 import TempIndoorDisplay from './TempIndoorDisplay';
 import {TempHumiTextDisplay, TempHumiDisplayType} from './TempHumiTextDisplay';
+import TempHumiLineChart from './TempHumiLineChart';
 
 import { smartClockService } from '../../services';
 
@@ -15,13 +16,14 @@ class TempHumiBoard extends React.Component {
         this.state = {
             fontSize: props.fontSize || '8rem',
             tempInfo: null,
-            historyData: null,
+            chartData: null,
             loading: false,
             error: null,
         };
     }
 
     componentDidMount() {
+        // defaultCache.clear(); // 清理过期缓存
         this.fetchData();
     }
 
@@ -55,13 +57,19 @@ class TempHumiBoard extends React.Component {
             const tData = await defaultCache.getOrSet(
             'tempInfo_data',
             () => smartClockService.getCurrentTempInfo(),
-            50 * 60 * 1000 // 5分钟缓存
+            20 * 60 * 1000 // 5分钟缓存
+            );
+            // 使用 getOrSet 方法，自动处理缓存逻辑
+            const hData = await defaultCache.getOrSet(
+            'tempInfoHistory_data',
+            () => smartClockService.getTempInfoHistory(),
+            20 * 60 * 1000 // 5分钟缓存
             );
         
             // const tData = await smartClockService.getCurrentTempInfo();
             this.handleTempInfoChange(tData);
             // const hData = await smartClockService.getTempInfoHistory(); 
-            // this.setState({ historyData: hData, loading: false, error: null });
+            this.setState({ chartData: hData, loading: false, error: null });
         } catch (error) {
             this.setState({ loading: false, error: error.message });
         }
@@ -71,7 +79,7 @@ class TempHumiBoard extends React.Component {
         const { fontSize } = this.props;
         const { 
             tempInfo, 
-            historyData
+            chartData
         } = this.state;
         
         return (
@@ -97,8 +105,8 @@ class TempHumiBoard extends React.Component {
                         <div>{tempInfo ? tempInfo.cup_temp : "--"}˚C</div>
                     </div>
                 </div>
-                <div>history {historyData ? historyData.cpu_used_rates[0] : "--"}</div>
-            </div>
+                <TempHumiLineChart data={chartData} fontSize={fontSize}/>
+           </div> 
         );
     }
 }

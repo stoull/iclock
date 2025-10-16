@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 
 import { Route, Routes } from 'react-router-dom';
+import { AppProvider } from './contexts/APPContext';
 
 import Home from './pages/Home';
 import Analysis from './pages/Analysis';
@@ -11,16 +12,18 @@ import TestView from './pages/TestView';
 
 function App() {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/analysis" element={<Analysis />} />
-        <Route path="/backstage" element={<BackStage />} />
-        <Route path="/examples" element={<Examples />} />
-        <Route path="/testview" element={<TestView />} />
-      </Routes>
-    </div>
+    <AppProvider>
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/analysis" element={<Analysis />} />
+          <Route path="/backstage" element={<BackStage />} />
+          <Route path="/examples" element={<Examples />} />
+          <Route path="/testview" element={<TestView />} />
+        </Routes>
+      </div>
+    </AppProvider>
   );
 }
 

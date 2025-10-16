@@ -1,9 +1,17 @@
 /* CSS Variables - 全局变量定义 */
 :root {
+  /* 默认使用 light 主题变量，防止闪烁 */
+  --surface: #ffffff;
+  --surface-variant: #f7f8fa;
+  --on-surface: #111827;
+  --muted: #6b7280;
+  --elevation-1: rgba(2,6,23,0.06);
+  --elevation-2: rgba(2,6,23,0.08);
+  
   /* 主题颜色 */
-  --main-bg-color: #282c34;
-  --main-text-color: #ffffff;
-  --secondary-text-color: #a0a0a0;
+  --main-bg-color: var(--surface);
+  --main-text-color: var(--on-surface);
+  --secondary-text-color: var(--muted);
   --accent-color: #ffffff;
   --highlight-color: #61dafb;
   
@@ -101,8 +109,4 @@ html[data-theme="dark"] {
 }
 
 /* 兼容旧变量名：保持 --main-bg-color 等作为回退（使用 surface 作为主背景） */
-:root {
-  --main-bg-color: var(--surface);
-  --main-text-color: var(--on-surface);
-  --secondary-text-color: var(--muted);
-}
+/* 这些变量已经在 :root 中定义，此处保留注释作为参考 */

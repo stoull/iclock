@@ -17,6 +17,7 @@ function DigitalClock({ fontSize }) {
         const dotSize = newFloat + 'rem';
         const meridiemSize = newFloat * 0.8 + 'rem';
         const daySize = newFloat *0.6 + 'rem';
+        console.log('DigitalClock update fontSize:', newFontSize, newFloat, dotSize, meridiemSize, daySize);
         setTimeFontSize(newFontSize);
         setDotFontSize(dotSize);
         setMeridiemFontSize(meridiemSize);

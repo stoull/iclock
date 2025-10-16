@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import './utils/globals'; // 引入全局变量设置
 
 import { autoDetectLanguage } from './utils/i18nHelper.js';
-import { initTheme } from './utils/theme.js';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -12,7 +12,6 @@ import { BrowserRouter } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 autoDetectLanguage();
-initTheme();
 root.render(
   <React.StrictMode>
     <BrowserRouter>

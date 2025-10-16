@@ -3,6 +3,8 @@
  * 基于 localStorage 实现，支持过期时间、命名空间等功能
  */
 
+import logger from '../logger';
+
 class PersistentStorage {
   constructor(namespace = 'app') {
     this.namespace = namespace;
@@ -37,7 +39,7 @@ class PersistentStorage {
       const cacheKey = this._getCacheKey(key);
       localStorage.setItem(cacheKey, JSON.stringify(cacheData));
       
-      console.log(`[PersistentStorage] 数据已缓存: ${key}`, {
+      logger.cache(`数据已缓存: ${key}`, {
         ttl: `${ttl / 1000}秒`,
         expiresAt: new Date(cacheData.expiresAt).toLocaleString()
       });
@@ -61,7 +63,7 @@ class PersistentStorage {
       const cachedItem = localStorage.getItem(cacheKey);
       
       if (!cachedItem) {
-        console.log(`[PersistentStorage] 缓存未命中: ${key}`);
+        logger.cache(`缓存未命中: ${key}`);
         return null;
       }
       
@@ -71,11 +73,11 @@ class PersistentStorage {
       // 检查是否过期
       if (!ignoreTTL && now > cacheData.expiresAt) {
         localStorage.removeItem(cacheKey);
-        console.log(`[PersistentStorage] 缓存已过期，已删除: ${key}`);
+        logger.cache(`缓存已过期，已删除: ${key}`);
         return null;
       }
       
-      console.log(`[PersistentStorage] 缓存命中: ${key}`, {
+      logger.cache(`缓存命中: ${key}`, {
         age: `${Math.round((now - cacheData.timestamp) / 1000)}秒前`,
         remainingTTL: ignoreTTL ? '忽略' : `${Math.round((cacheData.expiresAt - now) / 1000)}秒`
       });
