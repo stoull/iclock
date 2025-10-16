@@ -46,7 +46,7 @@ class PersistentStorage {
       
       return true;
     } catch (error) {
-      console.error(`[PersistentStorage] 缓存保存失败 (${key}):`, error);
+      logger.error(`[PersistentStorage] 缓存保存失败 (${key}):`, error);
       return false;
     }
   }
@@ -84,7 +84,7 @@ class PersistentStorage {
       
       return cacheData.data;
     } catch (error) {
-      console.error(`[PersistentStorage] 缓存读取失败 (${key}):`, error);
+      logger.error(`[PersistentStorage] 缓存读取失败 (${key}):`, error);
       return null;
     }
   }
@@ -107,10 +107,10 @@ class PersistentStorage {
     try {
       const cacheKey = this._getCacheKey(key);
       localStorage.removeItem(cacheKey);
-      console.log(`[PersistentStorage] 缓存已删除: ${key}`);
+      logger.log(`[PersistentStorage] 缓存已删除: ${key}`);
       return true;
     } catch (error) {
-      console.error(`[PersistentStorage] 缓存删除失败 (${key}):`, error);
+      logger.error(`[PersistentStorage] 缓存删除失败 (${key}):`, error);
       return false;
     }
   }
@@ -132,10 +132,10 @@ class PersistentStorage {
         }
       });
       
-      console.log(`[PersistentStorage] 已清除 ${count} 个缓存项`);
+      logger.log(`[PersistentStorage] 已清除 ${count} 个缓存项`);
       return count;
     } catch (error) {
-      console.error('[PersistentStorage] 清除缓存失败:', error);
+      logger.error('[PersistentStorage] 清除缓存失败:', error);
       return 0;
     }
   }
@@ -170,10 +170,10 @@ class PersistentStorage {
         }
       });
       
-      console.log(`[PersistentStorage] 已清除 ${count} 个过期缓存项`);
+      logger.log(`[PersistentStorage] 已清除 ${count} 个过期缓存项`);
       return count;
     } catch (error) {
-      console.error('[PersistentStorage] 清除过期缓存失败:', error);
+      logger.error('[PersistentStorage] 清除过期缓存失败:', error);
       return 0;
     }
   }
@@ -215,7 +215,7 @@ class PersistentStorage {
       
       return cacheInfo.sort((a, b) => b.timestamp - a.timestamp);
     } catch (error) {
-      console.error('[PersistentStorage] 获取缓存信息失败:', error);
+      logger.error('[PersistentStorage] 获取缓存信息失败:', error);
       return [];
     }
   }
@@ -236,12 +236,12 @@ class PersistentStorage {
     
     // 缓存不存在，执行函数获取数据
     try {
-      console.log(`[PersistentStorage] 缓存未命中，执行获取函数: ${key}`);
+      logger.log(`[PersistentStorage] 缓存未命中，执行获取函数: ${key}`);
       const data = await fetchFn();
       this.set(key, data, ttl);
       return data;
     } catch (error) {
-      console.error(`[PersistentStorage] 获取数据失败 (${key}):`, error);
+      logger.error(`[PersistentStorage] 获取数据失败 (${key}):`, error);
       throw error;
     }
   }
@@ -266,12 +266,12 @@ cache.set('user_info', { name: 'John', age: 25 }, 10 * 60 * 1000); // 缓存10�
 // 读取数据
 const userInfo = cache.get('user_info');
 if (userInfo) {
-  console.log('用户信息:', userInfo);
+  logger.log('用户信息:', userInfo);
 }
 
 // 检查是否存在
 if (cache.has('user_info')) {
-  console.log('用户信息缓存存在');
+  logger.log('用户信息缓存存在');
 }
 
 // 删除缓存
@@ -312,7 +312,7 @@ const WeatherComponent = () => {
         
         setWeatherData(data);
       } catch (error) {
-        console.error('获取天气数据失败:', error);
+        logger.error('获取天气数据失败:', error);
       } finally {
         setLoading(false);
       }
@@ -331,7 +331,7 @@ const WeatherComponent = () => {
       cache.set('weather_data', data, 5 * 60 * 1000);
       setWeatherData(data);
     } catch (error) {
-      console.error('刷新失败:', error);
+      logger.error('刷新失败:', error);
     } finally {
       setLoading(false);
     }
@@ -353,7 +353,7 @@ cache.clearExpired();
 
 // 获取缓存信息
 const cacheInfo = cache.getInfo();
-console.log('缓存统计:', cacheInfo);
+logger.log('缓存统计:', cacheInfo);
 
 // 清除所有缓存
 cache.clear();

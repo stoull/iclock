@@ -20,6 +20,7 @@ import {
 import React, { useState, useEffect } from 'react';
 
 import {defaultDataTable, createDataTable, lineChartOptions} from './TempHumiLineChartModel';
+import logger from '../../utils/logger';
 
 ChartJS.register(
   CategoryScale,
@@ -34,6 +35,7 @@ ChartJS.register(
 function TempHumiLineChart( { data, fontSize } ) {
     const [dataTable, setDataTable] = useState(defaultDataTable);
     const [chartOptions, setChartOptions] = useState(lineChartOptions);
+    const [chartHeight, setChartHeight] = useState(180);
 
     useEffect(() => {
         if (data) {
@@ -49,19 +51,23 @@ function TempHumiLineChart( { data, fontSize } ) {
     }, [fontSize]);
     
     function updateFontSize(newFontSize) {
-        let nSize = parseFloat(newFontSize); // '8rem' -> 8
+        const tFontSize = parseFloat(newFontSize); // '8rem' -> 8
+        let nSize = tFontSize;
         if (isNaN(nSize) || nSize <= 0) {
             nSize = 14; // 默认值
         }
+        
+        console.log('更新图表字体大小, 原始fontSize=', newFontSize, '解析后nSize=', nSize);
 
         // 字体变化逻辑........
         nSize = Math.round(nSize);
         nSize = nSize - 3;
         nSize = nSize > 30 ? 30 : nSize; // 最大值限制
         nSize = nSize < 6 ? 6 : nSize; // 最小值限制
+        console.log('更新图表字体大小, 原始fontSize=', newFontSize, '解析后nSize=', nSize);
 
         const cNewSize = `${nSize}px`
-        console.log('更新图表字体大小:', cNewSize, nSize);
+        logger.info('更新图表字体大小:', cNewSize, nSize);
         const dynamicOptions = {
             ...lineChartOptions,
             scales: {
@@ -90,10 +96,15 @@ function TempHumiLineChart( { data, fontSize } ) {
             }
         };
         setChartOptions(dynamicOptions);
+
+        // 根据字体大小调整图表高度
+        const chartHeight = 160+(tFontSize-16.0)*6;
+        console.log('nSize and chartHeight=', tFontSize, chartHeight);
+        setChartHeight(chartHeight);
     }
 
     return (
-        <div className='temp-humi-chart-container'>
+        <div className='temp-humi-chart-container' style={{ height: `${chartHeight}px` }}>
             <div className='line-chart'>
                 <Line data={dataTable} options={chartOptions} />
             </div>
