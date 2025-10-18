@@ -130,30 +130,6 @@ class HttpClient {
   }
 
   /**
-   * 执行错误拦截器
-   * @param {Response} response 
-   * @returns {Response}
-   */
-  async executeErrorInterceptors(response) {
-    let modifiedResponse = response;
-    
-    for (const interceptor of this.interceptors.error) {
-      try {
-        if (interceptor.fulfilled) {
-          modifiedResponse = await interceptor.fulfilled(modifiedResponse);
-        }
-      } catch (error) {
-        if (interceptor.rejected) {
-          throw await interceptor.rejected(error);
-        }
-        throw error;
-      }
-    }
-    
-    return modifiedResponse;
-  }
-
-  /**
    * 核心请求方法
    * @param {string} method
    * @param {string} url
