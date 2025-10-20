@@ -8,7 +8,6 @@ const API_CONFIG = {
   baseURL: process.env.REACT_APP_API_BASE_URL || 'https://ahut.site:8080/api/smart-clock',
   timeout: 10000,
   retries: 2,
-  retryDelay: 3000,
   headers: {
     'Content-Type': 'application/json',
   }

@@ -51,6 +51,29 @@ class SmartClockService {
     return await this.apiClient.get(API_PATHS.tempHistory + url.search);
   }
 
+  async askAIWithMessage(message) {
+    const url = 'https://openrouter.ai/api/v1/chat/completions';
+    
+    const params = { message };
+    const headers = {
+      "Authorization": "Bearer <OPENROUTER_API_KEY>",
+      "HTTP-Referer": "<YOUR_SITE_URL>", // Optional. Site URL for rankings on openrouter.ai.
+      "X-Title": "<YOUR_SITE_NAME>", // Optional. Site title for rankings on openrouter.ai.
+      "Content-Type": "application/json"
+    }
+    let body =  {
+      "model": "x-ai/grok-code-fast-1",
+      "messages": [
+        {
+          "role": "user",
+          "content": message, 
+        }
+      ]
+    };
+
+    return await this.apiClient.post(url, body, { headers: headers } );
+  }
+
 }
 
 // 导出单例实例

@@ -305,7 +305,7 @@ class HttpClient {
    * @returns {Promise}
    */
   async post(url, data, options = {}) {
-    return this.request('POST', url, {
+    return this.coreRequest('POST', url, {
       ...options,
       body: this.serializeData(data, options.headers)
     });
@@ -319,7 +319,7 @@ class HttpClient {
    * @returns {Promise}
    */
   async put(url, data, options = {}) {
-    return this.request('PUT', url, {
+    return this.coreRequest('PUT', url, {
       ...options,
       body: this.serializeData(data, options.headers)
     });
@@ -333,7 +333,7 @@ class HttpClient {
    * @returns {Promise}
    */
   async patch(url, data, options = {}) {
-    return this.request('PATCH', url, {
+    return this.coreRequest('PATCH', url, {
       ...options,
       body: this.serializeData(data, options.headers)
     });
@@ -346,7 +346,7 @@ class HttpClient {
    * @returns {Promise}
    */
   async delete(url, options = {}) {
-    return this.request('DELETE', url, { ...options, method: 'DELETE' });
+    return this.coreRequest('DELETE', url, { ...options, method: 'DELETE' });
   }
 
    /**
