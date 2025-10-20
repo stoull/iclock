@@ -1,3 +1,4 @@
+import './PhotoWidget.css';
 import { useEffect, useState } from "react";  
 
 // 动态导入所有图片
@@ -46,10 +47,10 @@ function PhotoWidget() {
   }
 
   return (
-    <div className="widgets">
+    <div className="widgets-photo">
       <img src={photoUrl}
         alt="Photo Widget"
-        className="photo-widget-image"
+        className="widgets-photo"
         onClick={loadNewPhoto}
         style={{ cursor: 'pointer' }}
         title="Click to change photo">

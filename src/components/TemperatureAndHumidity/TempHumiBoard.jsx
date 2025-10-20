@@ -83,7 +83,7 @@ class TempHumiBoard extends React.Component {
         } = this.state;
         
         return (
-            <div>
+            <div className='temp-humi'>
                 <div className='temp-humi-board'>
                     {/*<TempIndoorDisplay 
                         tempInfo={tempInfo}

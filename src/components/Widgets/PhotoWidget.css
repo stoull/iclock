@@ -1,4 +1,6 @@
-.widgets {
-    width: 100%;
-    height: 100%;
+.widgets-photo {
+    width: auto;
+    height: auto;
+    max-height: 400px;
+    min-width: 60px;
 }

@@ -1,7 +1,9 @@
+import './QuoteWidget.css';
+
 function QuoteWidget() {
   return (
-    <div className="widgets">
-      <h2>Quote Widget</h2>
+    <div className="widgets-quote">
+      <h2 className='quote'>Quote Widget</h2>
       {/* Quote widget content goes here */}
     </div>
   );

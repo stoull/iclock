@@ -1,3 +1,7 @@
+.temp-humi {
+  display: flex;
+  flex-direction: column;
+}
 
 .temp-humi-board {
   display: flex;

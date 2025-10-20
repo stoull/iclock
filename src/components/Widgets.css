@@ -1,6 +1,9 @@
 .widgets {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: auto;
     height: auto;
+    gap: 100px;
+    flex-shrink: 3;
+    flex-grow: 3;
 }
