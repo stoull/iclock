@@ -8,6 +8,7 @@ import DigitalClock from '../components/DigitalClock';
 import TopMenuBar from '../components/TopMenuBar';
 import {SideBar, BarMenuType} from '../components/SideBar';
 import TempHumiBoard from '../components/TemperatureAndHumidity/TempHumiBoard';
+import Widgets from '../components/Widgets'
 import useI18n from '../hooks/useI18n'; 
 
 import { usePreferences } from '../contexts/APPContext';
@@ -153,6 +154,7 @@ const Home = () => {
           <div className="content">
             <DigitalClock fontSize={fontSize} />
             <TempHumiBoard fontSize={fontSize} />
+            <Widgets />
           </div>
       </FullScreen>
     </div>
