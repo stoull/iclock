@@ -1,0 +1,72 @@
+[
+  {
+    "source" : null,
+    "favorite" : true,
+    "location" : "",
+    "authors" : "Norman Vincent Peale",
+    "tags" : "#brain, #thoughts",
+    "text" : "Change your thoughts and you change your world.",
+    "collections" : "",
+    "creationDate" : "2025-02-07T09:01:05Z"
+  },
+  {
+    "source" : null,
+    "favorite" : true,
+    "location" : "",
+    "authors" : "Oprah Winfrey",
+    "tags" : "",
+    "text" : "I don't believe in failure. It's not failure if you enjoyed the process.",
+    "collections" : "",
+    "creationDate" : "2025-02-07T09:00:53Z"
+  },
+  {
+    "source" : null,
+    "favorite" : true,
+    "location" : "",
+    "authors" : "George Bernard Shaw",
+    "tags" : "",
+    "text" : "We don't stop playing because we grow old; we grow old because we stop playing.",
+    "collections" : "",
+    "creationDate" : "2025-02-07T09:00:43Z"
+  },
+  {
+    "source" : null,
+    "favorite" : true,
+    "location" : "",
+    "authors" : "Carl Jung",
+    "tags" : "",
+    "text" : "Everything that irritates us about others can lead us to a better understanding of ourselves.",
+    "collections" : "",
+    "creationDate" : "2025-02-07T09:00:39Z"
+  },
+  {
+    "source" : null,
+    "favorite" : true,
+    "location" : "",
+    "authors" : "Bruce Lee",
+    "tags" : "",
+    "text" : "If you spend too much time thinking about a thing, you'll never get it done.",
+    "collections" : "",
+    "creationDate" : "2025-02-07T09:00:37Z"
+  },
+  {
+    "source" : null,
+    "favorite" : true,
+    "location" : "",
+    "authors" : "Bodhidharma",
+    "tags" : "",
+    "text" : "All know the way; few actually walk it.",
+    "collections" : "",
+    "creationDate" : "2025-02-07T09:00:37Z"
+  },
+  {
+    "source" : null,
+    "favorite" : true,
+    "location" : "",
+    "authors" : "Andy Rooney",
+    "tags" : "",
+    "text" : "If you smile when no one else is around, you really mean it.",
+    "collections" : "",
+    "creationDate" : "2025-02-07T09:00:36Z"
+  }
+]

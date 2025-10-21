@@ -1,6 +1,11 @@
 .widgets-photo {
     width: auto;
     height: auto;
-    max-height: 400px;
-    min-width: 60px;
+    max-height: 343px;
+    min-height: 44px;
+    align-items: center;
+    
+    border-radius: 22px;
+    overflow: hidden; /* 关键：隐藏超出圆角的部分 */
+    display: flex;
 }

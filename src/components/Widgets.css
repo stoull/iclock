@@ -1,9 +1,11 @@
 .widgets {
     display: flex;
     flex-direction: row;
-    width: auto;
-    height: auto;
-    gap: 100px;
+    justify-content: center;
     flex-shrink: 3;
     flex-grow: 3;
+    width: auto;
+    height: auto;
+    gap: 22px;
+    margin: 0 8px 0 8px;
 }

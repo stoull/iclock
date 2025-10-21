@@ -6,7 +6,6 @@ const Widgets = () => {
   return (
     <div className="widgets">
       <PhotoWidget />
-      <div className='test'>test</div>
       <QuoteWidget />
     </div>
   );
