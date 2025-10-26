@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 // 动态导入所有图片
 const importImages = () => {
   const images = {};
-  const imageFiles = [
-    '2020-11-02.jpg', '2020-11-02.jpg', '2020-11-02.jpg', '2020-11-02.jpg', '2020-11-02.jpg'
-  ];
+  const imageFiles = Array.from({ length: 30 }, (_, i) =>
+    `2025-10-${String(i + 1).padStart(2, '0')}.png`
+  );
   
   imageFiles.forEach(fileName => {
     try {
