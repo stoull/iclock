@@ -9,6 +9,7 @@ import Analysis from './pages/Analysis';
 import BackStage from './pages/BackStage';
 import Examples from './pages/Examples';
 import TestView from './pages/TestView';
+import PhotoUpload from './pages/PhotoUpload';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/backstage" element={<BackStage />} />
           <Route path="/examples" element={<Examples />} />
           <Route path="/testview" element={<TestView />} />
+          <Route path="/photoupload" element={<PhotoUpload />} />
         </Routes>
       </div>
     </AppProvider>
