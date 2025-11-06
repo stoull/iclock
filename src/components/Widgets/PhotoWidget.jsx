@@ -1,57 +1,58 @@
 import './PhotoWidget.css';
-import { useEffect, useState } from "react";  
+import { useEffect, useState } from "react";
 
-// 动态导入所有图片
-const importImages = () => {
-  const images = {};
-  const imageFiles = Array.from({ length: 30 }, (_, i) =>
-    `2025-10-${String(i + 1).padStart(2, '0')}.png`
-  );
-  
-  imageFiles.forEach(fileName => {
-    try {
-      images[fileName] = require(`../../assets/images/${fileName}`);
-    } catch (err) {
-      console.warn(`Could not load image: ${fileName}`);
-    }
-  });
-  
-  return images;
-};
-
-const availableImages = importImages();
-
-function getRandomImage() {
-    const imageKeys = Object.keys(availableImages);
-    if (imageKeys.length === 0) {
-        console.warn('No images available');
-        return null;
-    }
-    const randomKey = imageKeys[Math.floor(Math.random() * imageKeys.length)];
-    return availableImages[randomKey];
-}
+import { smartClockService, BASE_URL_IMAGES} from '../../services';
 
 function PhotoWidget() {
-  const [photoUrl, setPhotoUrl] = useState('');
+  const [photoList, setPhotoList] = useState([]);
+  const [showPhoto, setShowPhoto] = useState('');
 
   useEffect(() => {
     // 初始加载照片
-    loadNewPhoto();
+    getPhotoList();
   }, []);
 
-  function loadNewPhoto() {
-    const newPhoto = getRandomImage();
-    if (newPhoto) {
-      setPhotoUrl(newPhoto);
+  function getPhotoList() {
+    smartClockService.getPhotoList(22).then(response => {
+      if (response && response.data) {
+        const photos = response.data.data;
+        setPhotoList(photos);
+        updateRandomImage(photos);
+      }
+    }).catch(error => {
+      console.error('Error fetching photo list:', error);
+    });
+  }
+
+  function updateRandomImage(photos) {
+    // 如果没有传入photos参数，使用当前的photoList状态
+    let currentPhotos = photos
+    if (photos == undefined || photos.length === 0) {
+      currentPhotos = photoList;
+      console.log('Using photoList state.');
+    } else {
+      console.log('Using provided photos array.', photos);
     }
+    console.log('Updating random image...', photoList.length);
+    console.log('Photo list length:', currentPhotos.length);
+    if (currentPhotos.length === 0) return null;
+    const idx = Math.floor(Math.random() * currentPhotos.length);
+    const randomPhoto = currentPhotos[idx];
+    if (randomPhoto != null && randomPhoto.url) {
+     setShowPhoto(randomPhoto);
+    }
+  }
+
+  function handleImageClick() {
+    updateRandomImage();
   }
 
   return (
     <div className="widgets-photo">
-      <img src={photoUrl}
+      <img src={`${BASE_URL_IMAGES}${showPhoto.url}`}
         alt="Photo Widget"
         className="widgets-photo"
-        onClick={loadNewPhoto}
+        onClick={handleImageClick}
         style={{ cursor: 'pointer' }}
         title="Click to change photo">
       </img>

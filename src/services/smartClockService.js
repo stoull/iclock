@@ -3,13 +3,20 @@ import { ResponseHelper } from './httpClient.js';
 
 
 // 基础地址，可根据环境变量替换
-export const BASE_URL = process.env.REACT_APP_API_BASE || 'https://ahut.site:8080/api/smart-clock';
+ export const BASE_URL = process.env.REACT_APP_API_BASE || 'https://ahut.site:8080/api/smart-clock';
+ export const BASE_URL_IMAGES = 'http://ahut.site:8090';
+
+// export const BASE_URL = process.env.REACT_APP_API_BASE || 'http://20.4.2.128:8090/api/smart-clock';
+// export const BASE_URL_IMAGES = 'http://20.4.2.128:8090';
 
 export const API_PATHS = {
   tempInfo: '/temperature-humidity',
   tempHistory: '/temperature-humidity/history',
   surroundingsHistory: '/surroundings/history',
-  testApiPath: '/test-api'
+  testApiPath: '/test-api',
+
+  images_root: '/images/',
+  images_types: '/images/types/',
 };
 
 class SmartClockService {
@@ -22,6 +29,12 @@ class SmartClockService {
   async getCurrentTempInfo() {
     const url = API_PATHS.tempInfo;
     return this.apiClient.get(url);
+  }
+
+  async getPhotoList(images_type_id) {
+    const url = `${BASE_URL_IMAGES}${API_PATHS.images_root}`;
+    const options = {query: {type_id: images_type_id}};
+    return this.apiClient.get(url, options);
   }
   
   // 获取测试API数据

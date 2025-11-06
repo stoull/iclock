@@ -3,4 +3,4 @@
  */
 export { default as apiClient } from './apiClient';
 export { default as HttpClient, HttpError, ResponseHelper } from './httpClient';
-export { default as smartClockService } from './smartClockService';
+export { default as smartClockService, BASE_URL, BASE_URL_IMAGES } from './smartClockService';

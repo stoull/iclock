@@ -9,7 +9,7 @@ const API_CONFIG = {
   timeout: 10000,
   retries: 2,
   headers: {
-    'Content-Type': 'application/json',
+    'Accept': 'application/json',
   }
 };
 
