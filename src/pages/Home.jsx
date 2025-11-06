@@ -21,6 +21,7 @@ const Home = () => {
   const [fontSize, setFontSize] = useState(preferences.clock_font_size);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isShowSideBar, setIsShowSideBar] = useState(false);
+  const [updateTrigger, setUpdateTrigger] = useState(0); // 添加触发器状态
 
   const [isManualClickedMoreMenuItem, setIsManualClickedMoreMenuItem] = useState(false); // 用于移除刚打开网页，或者刷新网页时的动画效果
 
@@ -135,6 +136,13 @@ const Home = () => {
     setIsFullScreen(state);
   }
 
+  function onToggleWidgetsUpdate() {
+    // 这里可以添加需要执行的操作，例如刷新组件内容等
+    console.log('Home: toggleUpdate called');
+    // 通过改变触发器状态来通知子组件
+    setUpdateTrigger(prev => prev + 1);
+  }
+
   return (
     <div className="home">
       <FullScreen 
@@ -152,9 +160,28 @@ const Home = () => {
           
 
           <div className="content">
+            {/* 测试按钮 - 可以在开发时使用 */}
+            <button 
+              onClick={onToggleWidgetsUpdate}
+              style={{
+                position: 'absolute',
+                top: '10px',
+                right: '10px',
+                zIndex: 1000,
+                padding: '8px 16px',
+                backgroundColor: '#007bff',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}
+            >
+              触发更新
+            </button>
+            
             <DigitalClock fontSize={fontSize} />
             <TempHumiBoard fontSize={fontSize} />
-            <Widgets />
+            <Widgets updateTrigger={updateTrigger} onToggleUpdate={onToggleWidgetsUpdate} />
           </div>
       </FullScreen>
     </div>

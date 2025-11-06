@@ -4,12 +4,16 @@ import { useEffect, useState } from "react";
 
 import Quotes from '../../assets/resource/Quotes-Favorites.json';
 
-function QuoteWidget() {
+function QuoteWidget({onToggleUpdate, updateTrigger}) {
   const [quote, setQuote] = useState({ text: '', authors: '' });
 
   useEffect(() => {
     getRandomQuote();
   }, []);
+
+   useEffect(() => {
+    getRandomQuote();
+  }, [updateTrigger]); 
 
   function getRandomQuote() {
     const idx = Math.floor(Math.random() * Quotes.length);
