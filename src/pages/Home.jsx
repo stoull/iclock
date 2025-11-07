@@ -37,7 +37,6 @@ const Home = () => {
   useEffect(() => {
     // 首次执行时设置定时器
     const initialDelay = getDelayToNext5Minutes();
-    console.log(`首次定时器将在 ${initialDelay / 1000} 秒后触发`);
     
     const initialTimer = setTimeout(() => {
       scheduleContentUpdate();
@@ -112,7 +111,6 @@ const Home = () => {
 
   // 处理顶部菜单栏的操作
   function handleBarMenuActions(menuItem) {
-    console.log('Home: handleBarMenuActions called, menuItem:', menuItem);
     switch (menuItem) {
       case BarMenuType.FONTSIZEPLUS:
         handleIncrementFontSize();

@@ -57,17 +57,14 @@ function TempHumiLineChart( { data, fontSize } ) {
             nSize = 14; // 默认值
         }
         
-        console.log('更新图表字体大小, 原始fontSize=', newFontSize, '解析后nSize=', nSize);
 
         // 字体变化逻辑........
         nSize = Math.round(nSize);
         nSize = nSize - 3;
         nSize = nSize > 30 ? 30 : nSize; // 最大值限制
         nSize = nSize < 6 ? 6 : nSize; // 最小值限制
-        console.log('更新图表字体大小, 原始fontSize=', newFontSize, '解析后nSize=', nSize);
 
         const cNewSize = `${nSize}px`
-        logger.info('更新图表字体大小:', cNewSize, nSize);
         const dynamicOptions = {
             ...lineChartOptions,
             scales: {

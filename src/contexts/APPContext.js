@@ -47,7 +47,6 @@ export const AppProvider = ({ children }) => {
 
   // 初始化主题
   useEffect(() => {
-    console.log('渲染UseEffect-APPContext:', preferences.theme);
     if (preferences.theme) {
       applyTheme(preferences.theme);
     } else {
