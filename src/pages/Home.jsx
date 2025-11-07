@@ -86,6 +86,7 @@ const Home = () => {
   }
 
   function handleBarMenuActions(menuItem) {
+    console.log('Home: handleBarMenuActions called, menuItem:', menuItem);
     switch (menuItem) {
       case BarMenuType.FONTSIZEPLUS:
         handleIncrementFontSize();
@@ -95,6 +96,9 @@ const Home = () => {
         break;
       case BarMenuType.FULLSCREEN:
         handleToggleFullScreen();
+        break;
+      case BarMenuType.RELOAD:
+        toggleWidgetsUpdate();
         break;
       case BarMenuType.MORE:
         // 打开更多设置界面
@@ -137,9 +141,11 @@ const Home = () => {
   }
 
   function onToggleWidgetsUpdate() {
-    // 这里可以添加需要执行的操作，例如刷新组件内容等
-    console.log('Home: toggleUpdate called');
-    // 通过改变触发器状态来通知子组件
+     // 组件更新回调
+    console.log('Home: Widgets 组件更新了回调 '); 
+  }
+
+  function toggleWidgetsUpdate() {
     setUpdateTrigger(prev => prev + 1);
   }
 
@@ -160,25 +166,6 @@ const Home = () => {
           
 
           <div className="content">
-            {/* 测试按钮 - 可以在开发时使用 */}
-            <button 
-              onClick={onToggleWidgetsUpdate}
-              style={{
-                position: 'absolute',
-                top: '10px',
-                right: '10px',
-                zIndex: 1000,
-                padding: '8px 16px',
-                backgroundColor: '#007bff',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer'
-              }}
-            >
-              触发更新
-            </button>
-            
             <DigitalClock fontSize={fontSize} />
             <TempHumiBoard fontSize={fontSize} />
             <Widgets updateTrigger={updateTrigger} onToggleUpdate={onToggleWidgetsUpdate} />

@@ -1,4 +1,4 @@
-import { AiOutlineFullscreenExit, AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus, AiOutlineDoubleLeft, AiOutlineDoubleRight, AiOutlineBgColors, AiOutlineMoon, AiOutlineSun, AiOutlineTranslation } from "react-icons/ai";
+import { AiOutlineFullscreenExit, AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus, AiOutlineDoubleLeft, AiOutlineDoubleRight, AiOutlineBgColors, AiOutlineMoon, AiOutlineSun, AiOutlineTranslation, AiOutlineReload } from "react-icons/ai";
 
 const BarMenuType = Object.freeze({
     SIDEBARVISIBLE: 0,
@@ -10,7 +10,8 @@ const BarMenuType = Object.freeze({
     FONTSIZEPLUS: 11,
     FONTSIZEMINUS: 12,
     FULLSCREEN: 13,
-    MORE: 14
+    RELOAD: 14,
+    MORE: 15
 });
 const sideBarDataModel = [
     {
@@ -64,6 +65,12 @@ const topMenuBarDataModel = [
         icon: <AiOutlineFullscreen />,
         statusIcon: <AiOutlineFullscreenExit />,
         type: BarMenuType.FULLSCREEN
+    },
+    {
+        title: 'Reload',
+        path: '/Reload',
+        icon: <AiOutlineReload />,
+        type: BarMenuType.RELOAD
     },
     {
         title: 'More',

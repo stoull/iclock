@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from "react";
 function TopMenuBar ( {isFullScreen, isShowSideBar, onToggleIsManualClickedMoreMenuItem, onToggleMenuAction} ) {
     const isLoadedRef = useRef(false);
     const [isClicked, setIsClicked] = useState(false); // 用于移除刚打开网页，或者刷新网页时的动画效果
+    const [isReloadAnimating, setIsReloadAnimating] = useState(false); // 用于RELOAD动画状态
 
     useEffect( () => {
         isLoadedRef.current = true;
@@ -21,6 +22,9 @@ function TopMenuBar ( {isFullScreen, isShowSideBar, onToggleIsManualClickedMoreM
             // 设置为动画结束后的值 
            e.target.style.marginRight = '0px'; 
            e.target.style.transform = 'rotate(0deg)';
+        } else if (e && e.animationName === 'reloadSpin') {
+            // RELOAD动画结束
+            setIsReloadAnimating(false);
         }
     }
 
@@ -29,6 +33,12 @@ function TopMenuBar ( {isFullScreen, isShowSideBar, onToggleIsManualClickedMoreM
             onToggleIsManualClickedMoreMenuItem(true);
             setIsClicked(true);
         }
+        
+        // 处理RELOAD点击
+        if (item.type === BarMenuType.RELOAD) {
+            setIsReloadAnimating(true);
+        }
+        
         onToggleMenuAction(item.type);
     }
 
@@ -52,6 +62,16 @@ function TopMenuBar ( {isFullScreen, isShowSideBar, onToggleIsManualClickedMoreM
                 }
                 if (item.type === BarMenuType.MORE) {
                     return (<span key={index} data-index={index} className = {getMenuClassName(isShowSideBar, isLoadedRef.current)}
+                        onClick={ () => handleMenuclick(item)}
+                        onAnimationEnd={handleAnimationEnd}>
+                             {item.icon} 
+                        </span>);
+                }
+                if (item.type === BarMenuType.RELOAD) {
+                    return (<span 
+                        key={index} 
+                        data-index={index} 
+                        className={`reload-item ${isReloadAnimating ? 'spinning' : ''}`}
                         onClick={ () => handleMenuclick(item)}
                         onAnimationEnd={handleAnimationEnd}>
                              {item.icon} 
