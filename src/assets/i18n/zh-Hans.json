@@ -18,6 +18,7 @@
     "backstage": "后台"
   },
   "common": {
+     "reloading": "刷新中...",
     "loading": "加载中...",
     "error": "错误",
     "success": "成功",

@@ -23,10 +23,13 @@ export const AppProvider = ({ children }) => {
   };
 
   const updatePreferences = (newPreferences) => {
-    // 检查是否有实际变化
-    const hasChanges = Object.keys(newPreferences).some(key => 
-      preferences[key] !== newPreferences[key]
-    );
+        // 检查是否有实际变化
+    const hasChanges = Object.keys(newPreferences).some(key => {
+      const oldValue = preferences[key];
+      const newValue = newPreferences[key];
+      const isDifferent = oldValue !== newValue;
+      return isDifferent;
+    });
     
     if (hasChanges) {
       setPreferences(prev => ({ ...prev, ...newPreferences }));
@@ -36,7 +39,7 @@ export const AppProvider = ({ children }) => {
   // 当 preferences 变化时，保存到缓存
   useEffect(() => {
     try {
-      defaultCache.set('iclock_user_preferences', JSON.stringify(preferences), 30 * 24 * 60 * 60 * 1000); // 保存30天
+      defaultCache.set('iclock_user_preferences', JSON.stringify(preferences), 360 * 24 * 60 * 60 * 1000); // 保存360天
     } catch (error) {
       console.error('Error applying user preferences:', error);
     }

@@ -9,10 +9,13 @@ import { smartClockService } from '../../services';
 
 import defaultCache from '../../utils/storage/PersistentStorageCache';
 
+import { t } from '../../assets/i18n/translationHelpers.js';
+
 
 class TempHumiBoard extends React.Component {
     constructor(props) {
         super(props);
+        this.updateTrigger = props.updateTrigger;
         this.state = {
             fontSize: props.fontSize || '8rem',
             tempInfo: null,
@@ -36,6 +39,13 @@ class TempHumiBoard extends React.Component {
             
             // 可以在这里执行其他逻辑，比如重新计算样式等
             this.handleFontSizeChange(this.props.fontSize);
+        }
+
+        // 监听 updateTrigger 变化
+        if (prevProps.updateTrigger !== this.props.updateTrigger && this.props.updateTrigger > 0) {
+            console.log('TempHumiBoard: 收到更新信号, trigger:', this.props.updateTrigger);
+            // 强制刷新数据，清除缓存
+            this.refreshData();
         }
     }
 
@@ -75,16 +85,43 @@ class TempHumiBoard extends React.Component {
         }
     }
 
+    // 强制刷新数据（清除缓存后重新获取）
+    refreshData = async () => {
+        try {
+            this.setState({ loading: true });
+
+            // 清除相关缓存
+            await defaultCache.delete('tempInfo_data');
+            await defaultCache.delete('tempInfoHistory_data');
+
+            // 重新获取数据
+            const tData = await smartClockService.getCurrentTempInfo();
+            this.handleTempInfoChange(tData);
+            
+            const hData = await smartClockService.getTempInfoHistory();
+            this.setState({ chartData: hData, loading: false, error: null });
+        } catch (error) {
+            this.setState({ loading: false, error: error.message });
+        }
+    }
+
     render() {
         const { fontSize } = this.props;
         const { 
             tempInfo, 
-            chartData
+            chartData,
+            loading,
+            error
         } = this.state;
         
         return (
             <div className='temp-humi'>
-                <div className='temp-humi-board'>
+                {loading && (
+                    <div className='temp-humi-loading'>
+                        <div className='loading-indicator'>{t("common.reloading")}</div>
+                    </div>
+                )}
+                <div className={`temp-humi-board ${loading ? 'loading' : ''}`}>
                     {/*<TempIndoorDisplay 
                         tempInfo={tempInfo}
                         fontSize={fontSize}

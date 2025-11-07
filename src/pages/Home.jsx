@@ -21,7 +21,8 @@ const Home = () => {
   const [fontSize, setFontSize] = useState(preferences.clock_font_size);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [isShowSideBar, setIsShowSideBar] = useState(false);
-  const [updateTrigger, setUpdateTrigger] = useState(0); // 添加触发器状态
+  const [reloadWidgetsTrigger, setReloadWidgetsTrigger] = useState(0); // 添加触发器状态
+  const [updateTrigger, setUpdateTrigger] = useState(0);
 
   const [isManualClickedMoreMenuItem, setIsManualClickedMoreMenuItem] = useState(false); // 用于移除刚打开网页，或者刷新网页时的动画效果
 
@@ -32,15 +33,129 @@ const Home = () => {
     }
   }, [preferences.clock_font_size]);
 
+  // 每5分钟整时定时器
   useEffect(() => {
-    // smartClockService.getCurrentTempInfo().then(data => {
-    //   console.log('Home page request tempinfo sucessful: ', data);
-    // }).catch(err => {
-    //   console.error('Home page request tempinfo failed: ', err);
-    // });
+    // 首次执行时设置定时器
+    const initialDelay = getDelayToNext5Minutes();
+    console.log(`首次定时器将在 ${initialDelay / 1000} 秒后触发`);
+    
+    const initialTimer = setTimeout(() => {
+      scheduleContentUpdate();
+      
+      // 之后每5分钟执行一次
+      const intervalId = setInterval(() => {
+        scheduleContentUpdate();
+      }, 5 * 60 * 1000); // 5分钟
+      
+      // 清理函数中也要清除interval
+      return () => clearInterval(intervalId);
+    }, initialDelay);
+
+    // 清理函数
+    return () => {
+      clearTimeout(initialTimer);
+    };
   }, []);
 
-  // 顶部菜单栏相关功能的方法
+  // 计算到下一个5分钟整时的延迟时间
+  // 📌 注意：每次组件渲染时，这个函数都会重新创建（重新定义）
+  function getDelayToNext5Minutes() {
+    const now = new Date();
+    const currentMinutes = now.getMinutes();
+    const currentSeconds = now.getSeconds();
+    const currentMilliseconds = now.getMilliseconds();
+    
+    // 计算到下一个5分钟整时还需要多少分钟
+    const minutesToNext5 = 5 - (currentMinutes % 5);
+    // 转换为毫秒，并减去当前的秒和毫秒
+    const delay = (minutesToNext5 * 60 - currentSeconds) * 1000 - currentMilliseconds;
+    
+    return delay;
+  }
+
+  // 定时任务执行函数
+  function scheduleContentUpdate() {
+    const now = new Date();
+    const currentHours = now.getHours();
+    const currentMinutes = now.getMinutes();
+    
+    // 判断是否为半小时整点（00分或30分）
+    if (currentMinutes === 0 || currentMinutes === 30) {
+      if (currentMinutes === 0) {
+        // console.log('触发整小时任务');
+        // 在这里执行整小时的任务
+      } else {
+        // console.log('触发半小时任务');
+        // 在这里执行半小时的任务
+        triggerWidgetsUpdate();
+      }
+
+      // 特定时间点任务
+      if (currentHours === 7 && currentMinutes === 0) {
+       // 早上7点，更新回到用户手动选择的字体大小和主题 
+       updatePreferences({ theme: preferences.theme_manual, clock_font_size: preferences.clock_font_size_manual }); 
+       setFontSize(preferences.clock_font_size_manual);
+      } else if (currentHours === 21 && currentMinutes === 0) {
+        // 提醒晚上了
+
+      } else if (currentHours === 22 && currentMinutes === 0) {
+        // 强制切换到深色主题和大字体，哈哈哈，并提醒快玩了，快准备睡觉
+        updatePreferences({ theme : 'dark', clock_font_size : '22rem' });
+        setFontSize('22rem') 
+      }
+    } else {
+      // console.log('普通5分钟定时任务');
+      // 在这里执行普通的5分钟任务
+      setUpdateTrigger( prev => prev + 1);
+    }
+  }
+
+  // 处理顶部菜单栏的操作
+  function handleBarMenuActions(menuItem) {
+    console.log('Home: handleBarMenuActions called, menuItem:', menuItem);
+    switch (menuItem) {
+      case BarMenuType.FONTSIZEPLUS:
+        handleIncrementFontSize();
+        break;
+      case BarMenuType.FONTSIZEMINUS:
+        handleDecrementFontSize();
+        break;
+      case BarMenuType.FULLSCREEN:
+        handleToggleFullScreen();
+        break;
+      case BarMenuType.RELOAD:
+        triggerWidgetsUpdate();
+        break;
+      case BarMenuType.MORE:
+        // 打开更多设置界面
+        handleSideBarVisibleChange();
+        break;
+
+      case BarMenuType.SIDEBARVISIBLE:
+        handleSideBarVisibleChange();
+        break;
+      case BarMenuType.LIGHT_MODEL:
+        // 切换到浅色主题
+        updatePreferences({ theme : 'light' }); // 真正切换主题
+        updatePreferences({ theme_manual : 'light' }); // 用于记录手动选择，在自动模式切换时使用
+        break;
+      case BarMenuType.DARK_MODEL:
+        // 切换到深色主题
+        updatePreferences({ theme : 'dark' }) // 真正切换主题;
+        updatePreferences({ theme_manual : 'dark' }) // 用于记录手动选择，在自动模式切换时使用;
+        break;
+      case BarMenuType.WALLPAPER:
+        // 打开壁纸设置界面
+        break;
+      case BarMenuType.LANGUAGE:
+        handleLanguageChange();
+        break;
+      default:
+        console.warn('Unhandled menu item type:', menuItem);
+    }
+  }
+
+    // 顶部菜单栏相关功能的方法
   function handleDecrementFontSize() {
     setFontSize( preSize => {
       let preFloat = parseFloat(preSize);
@@ -48,6 +163,7 @@ const Home = () => {
       const newSize = `${preFloat-1}rem`;
       // 同时更新preferences
       updatePreferences({ clock_font_size: newSize });
+      updatePreferences({ clock_font_size_manual: newSize }); // 用于记录手动选择，在自动模式切换时使用;
       return newSize;
     })
   }
@@ -59,6 +175,7 @@ const Home = () => {
       const newSize = `${preFloat+1}rem`;
       // 同时更新preferences
       updatePreferences({ clock_font_size: newSize });
+      updatePreferences({ clock_font_size_manual: newSize }); // 用于记录手动选择，在自动模式切换时使用;
       return newSize;
     })
   }
@@ -85,48 +202,6 @@ const Home = () => {
     if (isZh) setLanguage('en'); else setLanguage('zh-Hant');
   }
 
-  function handleBarMenuActions(menuItem) {
-    console.log('Home: handleBarMenuActions called, menuItem:', menuItem);
-    switch (menuItem) {
-      case BarMenuType.FONTSIZEPLUS:
-        handleIncrementFontSize();
-        break;
-      case BarMenuType.FONTSIZEMINUS:
-        handleDecrementFontSize();
-        break;
-      case BarMenuType.FULLSCREEN:
-        handleToggleFullScreen();
-        break;
-      case BarMenuType.RELOAD:
-        toggleWidgetsUpdate();
-        break;
-      case BarMenuType.MORE:
-        // 打开更多设置界面
-        handleSideBarVisibleChange();
-        break;
-
-      case BarMenuType.SIDEBARVISIBLE:
-        handleSideBarVisibleChange();
-        break;
-      case BarMenuType.LIGHT_MODEL:
-        // 切换到浅色主题
-        updatePreferences({ theme : 'light' });
-        break;
-      case BarMenuType.DARK_MODEL:
-        // 切换到深色主题
-        updatePreferences({ theme : 'dark' });
-        break;
-      case BarMenuType.WALLPAPER:
-        // 打开壁纸设置界面
-        break;
-      case BarMenuType.LANGUAGE:
-        handleLanguageChange();
-        break;
-      default:
-        console.warn('Unhandled menu item type:', menuItem);
-    }
-  }
-
   // 用于移除刚打开网页，或者刷新网页时的动画效果
   function handleIsManualClickedMoreMenuItem(value) {
     if (value !== isManualClickedMoreMenuItem) {
@@ -140,13 +215,13 @@ const Home = () => {
     setIsFullScreen(state);
   }
 
-  function onToggleWidgetsUpdate() {
+  function onTriggerWidgetsUpdate() {
      // 组件更新回调
     console.log('Home: Widgets 组件更新了回调 '); 
   }
 
-  function toggleWidgetsUpdate() {
-    setUpdateTrigger(prev => prev + 1);
+  function triggerWidgetsUpdate() {
+    setReloadWidgetsTrigger(prev => prev + 1);
   }
 
   return (
@@ -167,8 +242,8 @@ const Home = () => {
 
           <div className="content">
             <DigitalClock fontSize={fontSize} />
-            <TempHumiBoard fontSize={fontSize} />
-            <Widgets updateTrigger={updateTrigger} onToggleUpdate={onToggleWidgetsUpdate} />
+            <TempHumiBoard fontSize={fontSize} updateTrigger={updateTrigger} />
+            <Widgets reloadTrigger={reloadWidgetsTrigger} onTriggerReload={onTriggerWidgetsUpdate} />
           </div>
       </FullScreen>
     </div>

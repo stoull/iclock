@@ -1,6 +1,7 @@
 .temp-humi {
   display: flex;
   flex-direction: column;
+  position: relative; /* 为绝对定位的加载遮罩提供定位上下文 */
 }
 
 .temp-humi-board {
@@ -27,4 +28,42 @@
   display: flex;
   font-weight: normal;
   font-size: 6px;
+}
+
+/* 加载状态样式 */
+.temp-humi-loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: 8px;
+}
+
+.loading-indicator {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #333;
+  animation: pulse 1.5s ease-in-out infinite alternate;
+}
+
+.temp-humi-board.loading {
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.6;
+  }
 }

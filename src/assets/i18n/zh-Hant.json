@@ -12,6 +12,7 @@
     "backstage": "後台"
   },
   "common": {
+    "reloading": "刷新中...",
     "loading": "載入中...",
     "error": "錯誤",
     "success": "成功",

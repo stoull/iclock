@@ -19,6 +19,7 @@
     "backstage": "BackStage"
   },
   "common": {
+     "reloading": "reloading...",
     "loading": "Loading...",
     "error": "Error",
     "success": "Success",

@@ -99,7 +99,6 @@ function TempHumiLineChart( { data, fontSize } ) {
 
         // 根据字体大小调整图表高度
         const chartHeight = 160+(tFontSize-16.0)*6;
-        console.log('nSize and chartHeight=', tFontSize, chartHeight);
         setChartHeight(chartHeight);
     }
 

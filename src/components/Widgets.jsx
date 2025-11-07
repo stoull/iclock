@@ -2,11 +2,11 @@ import './Widgets.css';
 import PhotoWidget from "./Widgets/PhotoWidget";
 import QuoteWidget from "./Widgets/QuoteWidget";
 
-const Widgets = ( {onToggleUpdate, updateTrigger} ) => {
+const Widgets = ( {reloadTrigger, onTriggerReload} ) => {
   return (
     <div className="widgets">
-      <PhotoWidget onToggleUpdate={onToggleUpdate} updateTrigger={updateTrigger}/>
-      <QuoteWidget onToggleUpdate={onToggleUpdate} updateTrigger={updateTrigger}/>
+      <PhotoWidget reloadTrigger={reloadTrigger} onTriggerReload={onTriggerReload}/>
+      <QuoteWidget reloadTrigger={reloadTrigger} onTriggerReload={onTriggerReload}/>
     </div>
   );
 };

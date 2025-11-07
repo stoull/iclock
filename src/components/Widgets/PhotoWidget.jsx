@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { smartClockService, BASE_URL_IMAGES} from '../../services';
 
-function PhotoWidget({onToggleUpdate, updateTrigger}) {
+function PhotoWidget({reloadTrigger, onTriggerReload}) {
   const [photoList, setPhotoList] = useState([]);
   const [currentPhoto, setCurrentPhoto] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -14,14 +14,14 @@ function PhotoWidget({onToggleUpdate, updateTrigger}) {
     getPhotoList();
   }, []);
 
-  // 监听父组件的 updateTrigger 变化
+  // 监听父组件的 reloadTrigger 变化
   useEffect(() => {
-    if (updateTrigger > 0) {
-      console.log('PhotoWidget: 收到父组件的更新信号, trigger:', updateTrigger);
+    if (reloadTrigger > 0) {
+      console.log('PhotoWidget: 收到父组件的更新信号, trigger:', reloadTrigger);
       // 执行更新操作：重新获取照片或切换照片
       updateRandomImage();
     }
-  }, [updateTrigger]);
+  }, [reloadTrigger]);
 
   function getPhotoList() {
     smartClockService.getPhotoList(10).then(response => {
