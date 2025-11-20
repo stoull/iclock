@@ -11,7 +11,8 @@
   justify-content: center;
   text-align: center;
   font-weight: bold;
-  gap: 60px;;
+  gap: 60px;
+  line-height: 0.9;
 }
 
 .temp-humi-board.indoor {
