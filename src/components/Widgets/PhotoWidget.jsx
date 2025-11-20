@@ -45,6 +45,7 @@ function PhotoWidget({reloadTrigger, onTriggerReload}) {
     const idx = Math.floor(Math.random() * currentPhotos.length);
     const randomPhoto = currentPhotos[idx];
     if (randomPhoto != null && randomPhoto.url) {
+      setIsLoading(true);
       setImageLoaded(false); // 重置加载状态
       setCurrentPhoto(randomPhoto);
     }
@@ -52,6 +53,10 @@ function PhotoWidget({reloadTrigger, onTriggerReload}) {
 
   function handleImageClick() {
     updateRandomImage();
+  }
+
+  function handleImageThumbnailLoad() {
+     setIsLoading(false);
   }
 
   function handleImageLoad() {
@@ -94,6 +99,7 @@ function PhotoWidget({reloadTrigger, onTriggerReload}) {
           src={getThumbnailUrl(currentPhoto)}
           alt="Thumbnail"
           className="widgets-photo thumbnail"
+          onLoad={handleImageThumbnailLoad}
           style={{ 
             filter: 'blur(0px)', 
             transition: 'filter 0.3s ease',
