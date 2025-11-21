@@ -63,7 +63,7 @@ export class TempHumiTextDisplay extends React.PureComponent {
     const { tempInfo, fontSize } = this.props;
     const { displayType, temperature, humidity, weather_des, color_temp, color_humi, color_weather } = this.state;
     const displayTypeClass = displayType === TempHumiDisplayType.INDOOR ? 'indoor' : 'outdoor';
-    const fontSizeRatio = displayType === TempHumiDisplayType.INDOOR ? 0.32 : 0.14; 
+    const fontSizeRatio = displayType === TempHumiDisplayType.INDOOR ? 0.22 : 0.08; 
     const adjustedFontSize = `${parseFloat(fontSize) * fontSizeRatio}rem`;
     return (
       <div className={`temp-humi-board ${displayTypeClass}`}
