@@ -23,6 +23,7 @@
     margin: 0;
     padding: 0;
     text-align: left;
+    white-space: pre-line; 
 }
 
 .quote-authors {
