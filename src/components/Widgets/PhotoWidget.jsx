@@ -5,7 +5,7 @@ import { smartClockService, BASE_URL_IMAGES} from '../../services';
 
 function PhotoWidget({reloadTrigger, onTriggerReload}) {
   const [photoList, setPhotoList] = useState([]);
-  const [currentPhoto, setCurrentPhoto] = useState('');
+  const [currentPhoto, setCurrentPhoto] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
 
@@ -61,7 +61,6 @@ function PhotoWidget({reloadTrigger, onTriggerReload}) {
 
   function handleImageLoad() {
     setImageLoaded(true);
-    setIsLoading(false);
   }
 
   function handleImageError() {
@@ -86,44 +85,34 @@ function PhotoWidget({reloadTrigger, onTriggerReload}) {
 
   return (
     <div className="widgets-photo">
-      {/* 加载占位符 */}
+      {/* 加载占位符 - 显示在顶层 */}
       {isLoading && (
         <div className="photo-placeholder">
           <div className="loading-spinner"></div>
         </div>
       )}
       
-      {/* 缩略图 - 先加载 */}
-      {currentPhoto && !imageLoaded && (
+      {/* 缩略图 - 绝对定位，z-index: 5 */}
+      {currentPhoto && (
         <img 
           src={getThumbnailUrl(currentPhoto)}
           alt="Thumbnail"
-          className="widgets-photo thumbnail"
+          className="photo-thumbnail"
           onLoad={handleImageThumbnailLoad}
-          style={{ 
-            filter: 'blur(0px)', 
-            transition: 'filter 0.3s ease',
-            cursor: 'pointer' 
-          }}
+          onError={handleImageThumbnailLoad}
           onClick={handleImageClick}
         />
       )}
       
-      {/* 高清图 - 后加载 */}
+      {/* 高清图 - 绝对定位，z-index: 6，加载完成后显示 */}
       {currentPhoto && (
         <img 
           src={getFullImageUrl(currentPhoto)}
           alt="Photo Widget"
-          className={`widgets-photo ${imageLoaded ? 'loaded' : 'loading'}`}
+          className={`photo-fullimage ${imageLoaded ? 'loaded' : ''}`}
           onClick={handleImageClick}
           onLoad={handleImageLoad}
           onError={handleImageError}
-          style={{ 
-            cursor: 'pointer',
-            opacity: imageLoaded ? 1 : 0,
-            transition: 'opacity 0.3s ease',
-            position: imageLoaded ? 'static' : 'absolute'
-          }}
           title="Click to change photo"
         />
       )}
