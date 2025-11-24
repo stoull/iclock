@@ -99,8 +99,8 @@ const Home = () => {
 
       } else if (currentHours === 22 && currentMinutes === 0) {
         // 强制切换到深色主题和大字体，哈哈哈，并提醒快玩了，快准备睡觉
-        updatePreferences({ theme : 'dark', clock_font_size : '22rem' });
-        setFontSize('22rem') 
+        updatePreferences({ theme : 'dark', clock_font_size : '20rem' });
+        setFontSize('20rem') 
       }
     } else {
       // console.log('普通5分钟定时任务');
