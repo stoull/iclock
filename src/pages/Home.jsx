@@ -83,6 +83,7 @@ const Home = () => {
       if (currentMinutes === 0) {
         // console.log('触发整小时任务');
         // 在这里执行整小时的任务
+        triggerWidgetsUpdate();
       } else {
         // console.log('触发半小时任务');
         // 在这里执行半小时的任务

@@ -23,19 +23,19 @@ export function getHumiColorValue(humi) {
 export function getTempColorValue(temp) {
     let colorValue;
     if (temp < 0) {
-        colorValue = '#5b00f9ff';
+        colorValue = '#8169d7ff'; 
     } else if (temp >= 0 && temp < 5) {
-        colorValue = '#0034F5';
+        colorValue = '#6874f1ff'; 
     } else if (temp >= 5 && temp < 10) {
-        colorValue = '#0084C1';
+        colorValue = '#5982f4ff'; 
     } else if (temp >= 10 && temp < 15) {
-        colorValue = '#56A63B';
+        colorValue = '#4c9bfbff';
     } else if (temp >= 15 && temp < 20) {
-        colorValue = '#5c00faff';
+        colorValue = '#3b94a6ff';  
     } else if (temp >= 20 && temp < 22) {
-        colorValue = '#0034F5';
+        colorValue = '#3ba686ff';  
     } else if (temp >= 22 && temp < 24) {
-        colorValue = '#0084C1';
+        colorValue = '#3ba64bff';
     } else if (temp >= 24 && temp < 27) {
         colorValue = '#56A63B';
     } else if (temp >= 27 && temp < 28) {

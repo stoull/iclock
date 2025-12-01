@@ -4,7 +4,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
     color: var(--main-text-color);
     text-align: center;
     font-weight: bold;
