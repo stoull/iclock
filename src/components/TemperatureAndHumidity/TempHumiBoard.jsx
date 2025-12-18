@@ -26,7 +26,7 @@ class TempHumiBoard extends React.Component {
     }
 
     componentDidMount() {
-        // defaultCache.clear(); // 清理过期缓存
+        defaultCache.clear(); // 清理过期缓存
         this.fetchData();
     }
 
@@ -45,7 +45,7 @@ class TempHumiBoard extends React.Component {
         if (prevProps.updateTrigger !== this.props.updateTrigger && this.props.updateTrigger > 0) {
             console.log('TempHumiBoard: 收到更新信号, trigger:', this.props.updateTrigger);
             // 强制刷新数据，清除缓存
-            this.refreshData();
+            this.fetchData();
         }
     }
 
@@ -86,7 +86,7 @@ class TempHumiBoard extends React.Component {
     }
 
     // 强制刷新数据（清除缓存后重新获取）
-    refreshData = async () => {
+    forceRefreshData = async () => {
         try {
             this.setState({ loading: true });
 
