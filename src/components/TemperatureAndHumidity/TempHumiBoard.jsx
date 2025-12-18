@@ -77,9 +77,9 @@ class TempHumiBoard extends React.Component {
             // );
         
             const tData = await smartClockService.getCurrentTempInfo();
-            this.handleTempInfoChange(tData);
+            this.handleTempInfoChange(tData.data);
             const hData = await smartClockService.getTempInfoHistory(); 
-            this.setState({ chartData: hData, loading: false, error: null });
+            this.setState({ chartData: hData.data, loading: false, error: null });
         } catch (error) {
             this.setState({ loading: false, error: error.message });
         }
