@@ -64,21 +64,21 @@ class TempHumiBoard extends React.Component {
     fetchData = async () => {
         try {
             // 使用 getOrSet 方法，自动处理缓存逻辑
-            const tData = await defaultCache.getOrSet(
-            'tempInfo_data',
-            () => smartClockService.getCurrentTempInfo(),
-            20 * 60 * 1000 // 5分钟缓存
-            );
-            // 使用 getOrSet 方法，自动处理缓存逻辑
-            const hData = await defaultCache.getOrSet(
-            'tempInfoHistory_data',
-            () => smartClockService.getTempInfoHistory(),
-            20 * 60 * 1000 // 5分钟缓存
-            );
+            // const tData = await defaultCache.getOrSet(
+            // 'tempInfo_data',
+            // () => smartClockService.getCurrentTempInfo(),
+            // 20 * 60 * 1000 // 5分钟缓存
+            // );
+            // // 使用 getOrSet 方法，自动处理缓存逻辑
+            // const hData = await defaultCache.getOrSet(
+            // 'tempInfoHistory_data',
+            // () => smartClockService.getTempInfoHistory(),
+            // 20 * 60 * 1000 // 5分钟缓存
+            // );
         
-            // const tData = await smartClockService.getCurrentTempInfo();
+            const tData = await smartClockService.getCurrentTempInfo();
             this.handleTempInfoChange(tData);
-            // const hData = await smartClockService.getTempInfoHistory(); 
+            const hData = await smartClockService.getTempInfoHistory(); 
             this.setState({ chartData: hData, loading: false, error: null });
         } catch (error) {
             this.setState({ loading: false, error: error.message });

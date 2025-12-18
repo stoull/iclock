@@ -3,8 +3,8 @@ import { ResponseHelper } from './httpClient.js';
 
 
 // 基础地址，可根据环境变量替换
- export const BASE_URL = process.env.REACT_APP_API_BASE || 'https://ahut.site:8080/api/smart-clock';
- export const BASE_URL_IMAGES = 'https://ahut.site:8090';
+ export const BASE_URL = process.env.REACT_APP_API_BASE || 'https://ahut.site:8000/smart-clock';
+ export const BASE_URL_IMAGES = 'https://ahut.site:9000/image';
 
 // export const BASE_URL = process.env.REACT_APP_API_BASE || 'http://20.4.2.128:8090/api/smart-clock';
 // export const BASE_URL_IMAGES = 'http://20.4.2.128:8090';
@@ -15,8 +15,8 @@ export const API_PATHS = {
   surroundingsHistory: '/surroundings/history',
   testApiPath: '/test-api',
 
-  images_root: '/images/',
-  images_types: '/images/types/',
+  images_root: '/',
+  images_types: '/types',
 };
 
 class SmartClockService {
