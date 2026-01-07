@@ -55,9 +55,17 @@ class TempHumiBoard extends React.Component {
         // 在这里可以添加其他需要在字体变化时执行的逻辑
     }
 
+    // 浅拷贝数据，确保在设置到 state 时使用新引用
+    cloneData = (v) => {
+        if (Array.isArray(v)) return [...v];
+        if (v && typeof v === 'object') return { ...v };
+        return v;
+    }
+
     // 当温湿度信息变化时，字体的颜色也进行改变
     handleTempInfoChange = (newTempInfo) => {
-        this.setState({ tempInfo: newTempInfo });
+        // 使用浅拷贝创建新引用，确保依赖于引用比较的子组件（如 PureComponent）能够检测到变化
+        this.setState({ tempInfo: { ...newTempInfo } });
 
     }
     
@@ -75,11 +83,13 @@ class TempHumiBoard extends React.Component {
             // () => smartClockService.getTempInfoHistory(),
             // 20 * 60 * 1000 // 5分钟缓存
             // );
-        
+       
+            // const rData = await smartClockService.getLast24HoursClimateRecords();
+            // console.log('Last 24 Hours Climate Records:', rData.data);
             const tData = await smartClockService.getCurrentTempInfo();
             this.handleTempInfoChange(tData.data);
             const hData = await smartClockService.getTempInfoHistory(); 
-            this.setState({ chartData: hData.data, loading: false, error: null });
+            this.setState({ chartData: this.cloneData(hData.data), loading: false, error: null });
         } catch (error) {
             this.setState({ loading: false, error: error.message });
         }
@@ -99,7 +109,7 @@ class TempHumiBoard extends React.Component {
             this.handleTempInfoChange(tData.data);
             
             const hData = await smartClockService.getTempInfoHistory();
-            this.setState({ chartData: hData.data, loading: false, error: null });
+            this.setState({ chartData: this.cloneData(hData.data), loading: false, error: null });
         } catch (error) {
             this.setState({ loading: false, error: error.message });
         }

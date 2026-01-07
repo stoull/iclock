@@ -1,6 +1,8 @@
 import APIClient from './apiClient.js';
 import { ResponseHelper } from './httpClient.js';
 
+import toISOStringWithTimezone from '../utils/datetimeTools.js';
+
 
 // 基础地址，可根据环境变量替换
  export const BASE_URL = process.env.REACT_APP_API_BASE || 'https://ahut.site:8000/smart-clock';
@@ -13,6 +15,7 @@ export const API_PATHS = {
   tempInfo: '/temperature-humidity',
   tempHistory: '/temperature-humidity/history',
   surroundingsHistory: '/surroundings/history',
+  homeClimateRecords: '/home_climate/records',
   testApiPath: '/test-api',
 
   images_root: '/',
@@ -24,6 +27,26 @@ class SmartClockService {
     this.baseURL = baseURL;
     this.apiClient = APIClient({ baseURL: baseURL });
   }
+  
+  async getLast24HoursClimateRecords() {
+    let currentDateTime = new Date();
+    const before24Hours = new Date(currentDateTime.getTime() - 24 * 60 * 60 * 1000);
+    let params = { start_date: toISOStringWithTimezone(currentDateTime) , end_date: toISOStringWithTimezone(before24Hours)};
+    return await this.getHomeClimateRecords(params);
+  }
+
+  async getHomeClimateRecords(params = { }) {
+    const url = new URL(this.baseURL + API_PATHS.homeClimateRecords);
+    
+    // 添加查询参数
+    Object.keys(params).forEach(key => {
+      if (params[key] !== undefined && params[key] !== null) {
+        url.searchParams.append(key, params[key]);
+      }
+    });
+    console.log('Fetching Home Climate Records with URL:', API_PATHS.homeClimateRecords + url.search);
+    return await this.apiClient.get(API_PATHS.homeClimateRecords + url.search);
+  }
 
   // 获取当前温湿度信息
   async getCurrentTempInfo() {
@@ -34,7 +57,7 @@ class SmartClockService {
   async getPhotoList(images_type_id) {
     const url = `${BASE_URL_IMAGES}${API_PATHS.images_root}`;
     const options = {query: {type_id: images_type_id}};
-    return this.apiClient.get(url, options);
+    return await this.apiClient.get(url, options);
   }
   
   // 获取测试API数据
