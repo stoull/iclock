@@ -39,8 +39,18 @@ function TempHumiLineChart( { data, fontSize } ) {
 
     useEffect(() => {
         if (data) {
-            const newDataTable = createDataTable(data);
-            setDataTable(newDataTable);
+            // if data contains key of 'records' and it's an array
+            if (data.records && Array.isArray(data.records)) {
+                data.labels = data.records.map(record => record.time);
+                data.temp = data.records.map(record => parseFloat(record.temp));
+                data.humi = data.records.map(record => parseFloat(record.hum));
+                const newDataTable = createDataTable(data);
+                setDataTable(newDataTable);
+                return;
+            } else {
+                const newDataTable = createDataTable(data);
+                setDataTable(newDataTable);
+            }
         }
     }, [data]);
 

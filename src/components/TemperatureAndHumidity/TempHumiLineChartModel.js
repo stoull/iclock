@@ -23,13 +23,13 @@ export const defaultDataTable = {
     ]
 };
 
-export const createDataTable = (response) => {
+export const createDataTable = (data) => {
     const data_history = {
-      labels: response.labels,
+      labels: data.labels,
       datasets: [
         {
           label: "温度(˚C)",
-          data: response.temp,
+          data: data.temp,
           fill: false,
           backgroundColor: "rgba(75,192,192,0.2)",
           borderColor: "#FF8585",
@@ -39,7 +39,7 @@ export const createDataTable = (response) => {
         },
         {
           label: "湿度()",
-          data: response.humi,
+          data: data.humi,
           fill: false,
           borderColor: "#99DCDC",
           borderCapStyle: 'round',

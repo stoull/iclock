@@ -83,12 +83,19 @@ class TempHumiBoard extends React.Component {
             // () => smartClockService.getTempInfoHistory(),
             // 20 * 60 * 1000 // 5分钟缓存
             // );
-       
-            // const rData = await smartClockService.getLast24HoursClimateRecords();
-            // console.log('Last 24 Hours Climate Records:', rData.data);
-            const tData = await smartClockService.getCurrentTempInfo();
+
+            // old api
+            // const tData = await smartClockService.getCurrentTempInfo();
+            // this.handleTempInfoChange(tData.data);
+            //
+            // const hData = await smartClockService.getTempInfoHistory(); 
+            // this.setState({ chartData: this.cloneData(hData.data), loading: false, error: null });
+ 
+            const location_id=2
+            const tData = await smartClockService.getCurrentClimate(location_id);
             this.handleTempInfoChange(tData.data);
-            const hData = await smartClockService.getTempInfoHistory(); 
+            
+            const hData = await smartClockService.getLast24HoursClimateRecords(location_id);
             this.setState({ chartData: this.cloneData(hData.data), loading: false, error: null });
         } catch (error) {
             this.setState({ loading: false, error: error.message });

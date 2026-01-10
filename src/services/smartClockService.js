@@ -16,6 +16,7 @@ export const API_PATHS = {
   tempHistory: '/temperature-humidity/history',
   surroundingsHistory: '/surroundings/history',
   homeClimateRecords: '/home_climate/records',
+  homeClimateCurrent: '/home_climate/current',
   testApiPath: '/test-api',
 
   images_root: '/',
@@ -28,10 +29,10 @@ class SmartClockService {
     this.apiClient = APIClient({ baseURL: baseURL });
   }
   
-  async getLast24HoursClimateRecords() {
+  async getLast24HoursClimateRecords(location_id) {
     let currentDateTime = new Date();
     const before24Hours = new Date(currentDateTime.getTime() - 24 * 60 * 60 * 1000);
-    let params = { start_date: toISOStringWithTimezone(currentDateTime) , end_date: toISOStringWithTimezone(before24Hours)};
+    let params = { start_date: toISOStringWithTimezone(currentDateTime), end_date: toISOStringWithTimezone(before24Hours), location_id: location_id };
     return await this.getHomeClimateRecords(params);
   }
 
@@ -44,8 +45,19 @@ class SmartClockService {
         url.searchParams.append(key, params[key]);
       }
     });
-    console.log('Fetching Home Climate Records with URL:', API_PATHS.homeClimateRecords + url.search);
     return await this.apiClient.get(API_PATHS.homeClimateRecords + url.search);
+  }
+
+  async getCurrentClimate(location_id) {
+    const url = new URL(this.baseURL + API_PATHS.homeClimateCurrent);
+    let params = { location_id: location_id };
+    // 添加查询参数
+    Object.keys(params).forEach(key => {
+      if (params[key] !== undefined && params[key] !== null) {
+        url.searchParams.append(key, params[key]);
+      }
+    });
+    return await this.apiClient.get(API_PATHS.homeClimateCurrent + url.search);
   }
 
   // 获取当前温湿度信息
