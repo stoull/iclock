@@ -11,6 +11,7 @@ import defaultCache from '../../utils/storage/PersistentStorageCache';
 
 import { t } from '../../assets/i18n/translationHelpers.js';
 
+const LOCATION_ID=3;
 
 class TempHumiBoard extends React.Component {
     constructor(props) {
@@ -90,12 +91,11 @@ class TempHumiBoard extends React.Component {
             //
             // const hData = await smartClockService.getTempInfoHistory(); 
             // this.setState({ chartData: this.cloneData(hData.data), loading: false, error: null });
- 
-            const location_id=2
-            const tData = await smartClockService.getCurrentClimate(location_id);
+
+            const tData = await smartClockService.getCurrentClimate(LOCATION_ID);
             this.handleTempInfoChange(tData.data);
-            
-            const hData = await smartClockService.getLast24HoursClimateRecords(location_id);
+
+            const hData = await smartClockService.getLast24HoursClimateRecords(LOCATION_ID);
             this.setState({ chartData: this.cloneData(hData.data), loading: false, error: null });
         } catch (error) {
             this.setState({ loading: false, error: error.message });
@@ -112,11 +112,18 @@ class TempHumiBoard extends React.Component {
             await defaultCache.delete('tempInfoHistory_data');
 
             // 重新获取数据
-            const tData = await smartClockService.getCurrentTempInfo();
-            this.handleTempInfoChange(tData.data);
+            // const tData = await smartClockService.getCurrentTempInfo();
+            // this.handleTempInfoChange(tData.data);
             
-            const hData = await smartClockService.getTempInfoHistory();
+            // const hData = await smartClockService.getTempInfoHistory();
+            // this.setState({ chartData: this.cloneData(hData.data), loading: false, error: null });
+
+            const tData = await smartClockService.getCurrentClimate(LOCATION_ID);
+            this.handleTempInfoChange(tData.data);
+
+            const hData = await smartClockService.getLast24HoursClimateRecords(LOCATION_ID);
             this.setState({ chartData: this.cloneData(hData.data), loading: false, error: null });
+
         } catch (error) {
             this.setState({ loading: false, error: error.message });
         }
