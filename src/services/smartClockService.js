@@ -29,10 +29,10 @@ class SmartClockService {
     this.apiClient = APIClient({ baseURL: baseURL });
   }
   
-  async getLast24HoursClimateRecords(location_id) {
+  async getLast24HoursClimateRecords(sensor_type) {
     let currentDateTime = new Date();
     const before24Hours = new Date(currentDateTime.getTime() - 24 * 60 * 60 * 1000);
-    let params = { start_date: toISOStringWithTimezone(currentDateTime), end_date: toISOStringWithTimezone(before24Hours), location_id: location_id };
+    let params = { start_date: toISOStringWithTimezone(currentDateTime), end_date: toISOStringWithTimezone(before24Hours), location_id: 3, sensor_type: sensor_type };
     return await this.getHomeClimateRecords(params);
   }
 
@@ -48,9 +48,9 @@ class SmartClockService {
     return await this.apiClient.get(API_PATHS.homeClimateRecords + url.search);
   }
 
-  async getCurrentClimate(location_id) {
+  async getCurrentClimate(sensor_type) {
     const url = new URL(this.baseURL + API_PATHS.homeClimateCurrent);
-    let params = { location_id: location_id };
+    let params = { location_id: 3, sensor_type: sensor_type };
     // 添加查询参数
     Object.keys(params).forEach(key => {
       if (params[key] !== undefined && params[key] !== null) {
