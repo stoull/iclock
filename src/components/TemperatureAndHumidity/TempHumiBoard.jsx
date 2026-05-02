@@ -11,7 +11,7 @@ import defaultCache from '../../utils/storage/PersistentStorageCache';
 
 import { t } from '../../assets/i18n/translationHelpers.js';
 
-const LOCATION_ID=3;
+const kSensor_type=3; // 3 dth 5 sht
 
 class TempHumiBoard extends React.Component {
     constructor(props) {
@@ -21,6 +21,7 @@ class TempHumiBoard extends React.Component {
             fontSize: props.fontSize || '8rem',
             tempInfo: null,
             chartData: null,
+            chartData2: null,
             loading: false,
             error: null,
         };
@@ -92,11 +93,15 @@ class TempHumiBoard extends React.Component {
             // const hData = await smartClockService.getTempInfoHistory(); 
             // this.setState({ chartData: this.cloneData(hData.data), loading: false, error: null });
 
-            const tData = await smartClockService.getCurrentClimate(LOCATION_ID);
+            const tData = await smartClockService.getCurrentClimate(kSensor_type);
             this.handleTempInfoChange(tData.data);
 
-            const hData = await smartClockService.getLast24HoursClimateRecords(LOCATION_ID);
+            const hData = await smartClockService.getLast24HoursClimateRecords(kSensor_type);
             this.setState({ chartData: this.cloneData(hData.data), loading: false, error: null });
+
+            // const h2Data = await smartClockService.getLast24HoursClimateRecords(5);
+            // this.setState({ chartData2: this.cloneData(h2Data.data), loading: false, error: null });
+
         } catch (error) {
             this.setState({ loading: false, error: error.message });
         }
@@ -118,11 +123,14 @@ class TempHumiBoard extends React.Component {
             // const hData = await smartClockService.getTempInfoHistory();
             // this.setState({ chartData: this.cloneData(hData.data), loading: false, error: null });
 
-            const tData = await smartClockService.getCurrentClimate(LOCATION_ID);
+            const tData = await smartClockService.getCurrentClimate(kSensor_type);
             this.handleTempInfoChange(tData.data);
 
-            const hData = await smartClockService.getLast24HoursClimateRecords(LOCATION_ID);
+            const hData = await smartClockService.getLast24HoursClimateRecords(kSensor_type);
             this.setState({ chartData: this.cloneData(hData.data), loading: false, error: null });
+
+            // const h2Data = await smartClockService.getLast24HoursClimateRecords(5);
+            // this.setState({ chartData2: this.cloneData(h2Data.data), loading: false, error: null }); 
 
         } catch (error) {
             this.setState({ loading: false, error: error.message });
@@ -134,6 +142,7 @@ class TempHumiBoard extends React.Component {
         const { 
             tempInfo, 
             chartData,
+            chartData2,
             loading,
             error
         } = this.state;
@@ -167,6 +176,7 @@ class TempHumiBoard extends React.Component {
                     </div>
                 </div>
                 <TempHumiLineChart data={chartData} fontSize={fontSize}/>
+                {/* <TempHumiLineChart data={chartData2} fontSize={fontSize}/> */}
            </div> 
         );
     }
