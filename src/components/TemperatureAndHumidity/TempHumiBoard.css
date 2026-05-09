@@ -22,13 +22,29 @@
 
 .temp-humi-board.outdoor {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
 }
 
 .temp-humi-board.cpu {
   display: flex;
   font-weight: normal;
   font-size: 6px;
+}
+
+.temp-humi-wind-dir {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1em;
+}
+
+.temp-humi-wind-arrow {
+  display: inline-block;
+  transform-origin: 50% 50%;
+  font-size: 1.2em;
+  line-height: 1;
 }
 
 /* 加载状态样式 */

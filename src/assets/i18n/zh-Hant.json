@@ -11,6 +11,19 @@
     "analysis": "分析", 
     "backstage": "後台"
   },
+  "climate": {
+    "windSpeedUnit": "公尺/秒",
+    "windDirection": {
+      "N": "北",
+      "NE": "東北",
+      "E": "東",
+      "SE": "東南",
+      "S": "南",
+      "SW": "西南",
+      "W": "西",
+      "NW": "西北"
+    }
+  },
   "common": {
     "reloading": "刷新中...",
     "loading": "載入中...",

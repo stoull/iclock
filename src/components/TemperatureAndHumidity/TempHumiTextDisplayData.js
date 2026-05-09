@@ -1,3 +1,49 @@
+/**
+ * Windy 风场默认配色（风速 m/s → RGB），与地图上「Wind」图层标尺一致；
+ * 可在 Windy：Settings → Customize color scale 查看或导出。
+ * @see https://www.windy.com/colors
+ */
+const WINDY_WIND_MS_RGB_STOPS = [
+  [0, [197, 214, 216]],
+  [2, [166, 215, 218]],
+  [4, [61, 162, 214]],
+  [6, [38, 73, 186]],
+  [7, [55, 114, 55]],
+  [9, [43, 172, 43]],
+  [10, [130, 190, 134]],
+  [11, [222, 226, 105]],
+  [14, [236, 165, 54]],
+  [16, [228, 117, 63]],
+  [18, [212, 77, 92]],
+  [19, [152, 14, 14]],
+  [20, [113, 27, 114]],
+  [24, [180, 153, 176]],
+  [25, [220, 220, 220]],
+  [35, [148, 148, 148]],
+];
+
+function rgbTupleToCss([r, g, b]) {
+  return `rgb(${r},${g},${b})`;
+}
+
+/** @param {number} speedMs 风速 (m/s)，与接口 wind_speed 一致 */
+export function getWindyWindColorAtMs(speedMs) {
+  const v = Number(speedMs);
+  if (!Number.isFinite(v)) return '#888888';
+  const stops = WINDY_WIND_MS_RGB_STOPS;
+  if (v <= stops[0][0]) return rgbTupleToCss(stops[0][1]);
+  const last = stops[stops.length - 1];
+  if (v >= last[0]) return rgbTupleToCss(last[1]);
+  let i = 0;
+  while (i < stops.length - 1 && stops[i + 1][0] < v) i += 1;
+  const [s0, c0] = stops[i];
+  const [s1, c1] = stops[i + 1];
+  const t = (v - s0) / (s1 - s0);
+  const r = Math.round(c0[0] + (c1[0] - c0[0]) * t);
+  const g = Math.round(c0[1] + (c1[1] - c0[1]) * t);
+  const b = Math.round(c0[2] + (c1[2] - c0[2]) * t);
+  return `rgb(${r},${g},${b})`;
+}
 
 export function getHumiColorValue(humi) {
     // #E39C57 30 #FFD38B  45 #8FE759 65 #008CB5 80  #0071B5 100

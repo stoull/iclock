@@ -1,6 +1,45 @@
 import React from 'react';
 
-import { getHumiColorValue, getTempColorValue, getWheatherColorValue } from './TempHumiTextDisplayData';
+import { t } from '../../assets/i18n/translationHelpers.js';
+import {
+  getHumiColorValue,
+  getTempColorValue,
+  getWindyWindColorAtMs,
+  getWheatherColorValue,
+} from './TempHumiTextDisplayData';
+
+const WIND_DIR_KEYS = [
+  'climate.windDirection.N',
+  'climate.windDirection.NE',
+  'climate.windDirection.E',
+  'climate.windDirection.SE',
+  'climate.windDirection.S',
+  'climate.windDirection.SW',
+  'climate.windDirection.W',
+  'climate.windDirection.NW',
+];
+
+/** 气象风来自的方向（度）→ 八方位索引，用于无障碍文案 */
+function sectorIndexFromWindDegrees(deg) {
+  const d = Number(deg);
+  if (!Number.isFinite(d)) return null;
+  const normalized = ((d % 360) + 360) % 360;
+  return Math.floor((normalized + 22.5) / 45) % 8;
+}
+
+/** 箭头指向风的去向（与 wind_deg「来自何方」相差 180°） */
+function blowDirectionDegrees(deg) {
+  const d = Number(deg);
+  if (!Number.isFinite(d)) return null;
+  return ((d + 180) % 360 + 360) % 360;
+}
+
+function formatWindSpeedForDisplay(speed) {
+  const n = Number(speed);
+  if (!Number.isFinite(n)) return null;
+  return n.toFixed(1);
+}
+
 export const TempHumiDisplayType = Object.freeze({
   INDOOR: 'indoor',
   OUTDOOR: 'outdoor'
@@ -63,8 +102,23 @@ export class TempHumiTextDisplay extends React.PureComponent {
     const { tempInfo, fontSize } = this.props;
     const { displayType, temperature, humidity, weather_des, color_temp, color_humi, color_weather } = this.state;
     const displayTypeClass = displayType === TempHumiDisplayType.INDOOR ? 'indoor' : 'outdoor';
-    const fontSizeRatio = displayType === TempHumiDisplayType.INDOOR ? 0.22 : 0.08; 
+    const fontSizeRatio = displayType === TempHumiDisplayType.INDOOR ? 0.22 : 0.08;
     const adjustedFontSize = `${parseFloat(fontSize) * fontSizeRatio}rem`;
+
+    let windArrowRotate = null;
+    let windAriaLabel = undefined;
+    let windSpeedLabel = '--';
+    let windyWindColor = null;
+    if (displayType === TempHumiDisplayType.OUTDOOR && tempInfo) {
+      windArrowRotate = blowDirectionDegrees(tempInfo.wind_deg);
+      const idx = sectorIndexFromWindDegrees(tempInfo.wind_deg);
+      if (idx !== null) windAriaLabel = t(WIND_DIR_KEYS[idx]);
+      const speedNum = Number(tempInfo.wind_speed);
+      const speedStr = formatWindSpeedForDisplay(tempInfo.wind_speed);
+      windSpeedLabel = speedStr !== null ? `${speedStr} ${t('climate.windSpeedUnit')}` : '--';
+      windyWindColor = Number.isFinite(speedNum) ? getWindyWindColorAtMs(speedNum) : null;
+    }
+
     return (
       <div className={`temp-humi-board ${displayTypeClass}`}
            style={{ fontSize: adjustedFontSize }}>
@@ -76,9 +130,34 @@ export class TempHumiTextDisplay extends React.PureComponent {
         </div>
         {
           displayType === TempHumiDisplayType.OUTDOOR && (
-            <div style={{ color: color_weather }}>
-              { weather_des }
-            </div>
+            <>
+              <div style={{ color: color_weather }}>
+                { weather_des }
+              </div>
+              <div
+                className="temp-humi-wind-dir"
+                style={{ color: windyWindColor ?? color_weather }}
+                {...(windAriaLabel ? { role: 'img', 'aria-label': windAriaLabel } : {})}
+              >
+                {windArrowRotate !== null ? (
+                  <span
+                    className="temp-humi-wind-arrow"
+                    style={{ transform: `rotate(${windArrowRotate}deg)` }}
+                    aria-hidden
+                  >
+                    ↑
+                  </span>
+                ) : (
+                  <span aria-hidden>--</span>
+                )}
+              </div>
+              <div
+                className="temp-humi-wind-speed"
+                style={{ color: windyWindColor ?? color_weather }}
+              >
+                {windSpeedLabel}
+              </div>
+            </>
           )
         }
       </div>

@@ -31,6 +31,19 @@
     "version": "Version {{version}}",
     "footer": "{{appName}} v{{version}} - All rights reserved"
   },
+  "climate": {
+    "windSpeedUnit": "m/s",
+    "windDirection": {
+      "N": "N",
+      "NE": "NE",
+      "E": "E",
+      "SE": "SE",
+      "S": "S",
+      "SW": "SW",
+      "W": "W",
+      "NW": "NW"
+    }
+  },
   "date": {
     "日": "日",
     "一": "一",
