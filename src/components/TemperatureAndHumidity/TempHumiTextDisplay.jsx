@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { t } from '../../assets/i18n/translationHelpers.js';
+import windSockIcon from '../../assets/resource/fengxiangdai.svg';
 import {
   getHumiColorValue,
   getTempColorValue,
@@ -135,10 +136,15 @@ export class TempHumiTextDisplay extends React.PureComponent {
                 { weather_des }
               </div>
               <div
-                className="temp-humi-wind-dir"
+                className="temp-humi-wind-dir temp-humi-wind-with-icon"
                 style={{ color: windyWindColor ?? color_weather }}
                 {...(windAriaLabel ? { role: 'img', 'aria-label': windAriaLabel } : {})}
               >
+                <span
+                  className="temp-humi-wind-prefix-icon"
+                  style={{ '--wind-prefix-icon': `url(${windSockIcon})` }}
+                  aria-hidden
+                />
                 {windArrowRotate !== null ? (
                   <span
                     className="temp-humi-wind-arrow"

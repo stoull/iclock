@@ -47,6 +47,29 @@
   line-height: 1;
 }
 
+.temp-humi-wind-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
+.temp-humi-wind-prefix-icon {
+  width: 1.1em;
+  height: 1.1em;
+  display: inline-block;
+  flex: 0 0 auto;
+  background-color: currentColor;
+  opacity: 0.95;
+  -webkit-mask-image: var(--wind-prefix-icon);
+  mask-image: var(--wind-prefix-icon);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
 /* 加载状态样式 */
 .temp-humi-loading {
   position: absolute;
