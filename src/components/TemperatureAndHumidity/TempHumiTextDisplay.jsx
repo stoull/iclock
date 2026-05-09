@@ -41,6 +41,12 @@ function formatWindSpeedForDisplay(speed) {
   return n.toFixed(1);
 }
 
+function formatPressureForDisplay(pressure) {
+  const n = Number(pressure);
+  if (!Number.isFinite(n)) return null;
+  return Math.round(n).toString();
+}
+
 export const TempHumiDisplayType = Object.freeze({
   INDOOR: 'indoor',
   OUTDOOR: 'outdoor'
@@ -109,6 +115,7 @@ export class TempHumiTextDisplay extends React.PureComponent {
     let windArrowRotate = null;
     let windAriaLabel = undefined;
     let windSpeedLabel = '--';
+    let pressureLabel = '--';
     let windyWindColor = null;
     if (displayType === TempHumiDisplayType.OUTDOOR && tempInfo) {
       windArrowRotate = blowDirectionDegrees(tempInfo.wind_deg);
@@ -118,6 +125,9 @@ export class TempHumiTextDisplay extends React.PureComponent {
       const speedStr = formatWindSpeedForDisplay(tempInfo.wind_speed);
       windSpeedLabel = speedStr !== null ? `${speedStr} ${t('climate.windSpeedUnit')}` : '--';
       windyWindColor = Number.isFinite(speedNum) ? getWindyWindColorAtMs(speedNum) : null;
+
+      const pressureStr = formatPressureForDisplay(tempInfo.pressure ?? tempInfo.outdoors_pressure);
+      pressureLabel = pressureStr !== null ? `${pressureStr} hPa` : '--';
     }
 
     return (
@@ -161,7 +171,7 @@ export class TempHumiTextDisplay extends React.PureComponent {
                 className="temp-humi-wind-speed"
                 style={{ color: windyWindColor ?? color_weather }}
               >
-                {windSpeedLabel}
+                {windSpeedLabel} / {pressureLabel}
               </div>
             </>
           )
