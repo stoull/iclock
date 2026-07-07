@@ -11,7 +11,7 @@ import defaultCache from '../../utils/storage/PersistentStorageCache';
 
 import { t } from '../../assets/i18n/translationHelpers.js';
 
-const kSensor_type=3; // 3 dth 5 sht
+const kSensor_type=5; // 3 dth 5 sht
 
 class TempHumiBoard extends React.Component {
     constructor(props) {
